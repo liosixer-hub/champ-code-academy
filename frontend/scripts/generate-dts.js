@@ -20,6 +20,16 @@ const appConfigs = [
     configPath: 'src/apps/login/vite.config.ts',
     distPath: 'src/apps/login/dist'
   },
+  {
+    name: 'dashboard',
+    configPath: 'src/apps/dashboard/vite.config.ts',
+    distPath: 'src/apps/dashboard/dist'
+  },
+  {
+    name: 'home',
+    configPath: 'src/apps/home/vite.config.ts',
+    distPath: 'src/apps/home/dist'
+  },
 ];
 
 // 从 vite 配置中解析 exposes

@@ -1,7 +1,7 @@
 import React, { Suspense, useState } from 'react';
 
 // Import shared module
-import { useUserStore } from 'shared/store';
+import { useAppStore } from 'shared/store';
 
 // 懒加载远程模块
 const LoginApp = React.lazy(() => import('login/LoginApp'));
@@ -9,7 +9,7 @@ const DashboardApp = React.lazy(() => import('dashboard/DashboardApp'));
 const HomeApp = React.lazy(() => import('home/HomeApp'));
 
 function App() {
-  const { isAuthenticated } = useUserStore(); // 使用共享状态
+  const { isAuthenticated } = useAppStore(); // 使用共享状态
   const [currentView, setCurrentView] = useState<'home' | 'login'>('home');
 
   // 如果已认证，显示 dashboard

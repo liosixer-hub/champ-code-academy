@@ -137,6 +137,9 @@ async function main() {
       console.log('构建 shared...');
       executeCommand(sharedPath, 'pnpm build');
       
+      // 启动shared preview
+      await startProcess(sharedPath, 'pnpm preview', 'shared preview');
+      
       // 依次启动apps中各模块的preview
       const appsDir = fs.readdirSync(appsPath);
       for (const app of appsDir) {

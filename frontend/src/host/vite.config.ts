@@ -24,5 +24,9 @@ export default defineConfig({
   server: {
     port: 5000,
     strictPort: true, 
+  },
+  build: {
+    target: 'esnext',
+    minify: 'terser',
   }
 });

@@ -50,6 +50,26 @@ declare module 'login/LoginApp' {
   export default component;
 }
 
+// dashboard 应用暴露的模块
+declare module 'dashboard/DashboardApp' {
+  import type React from 'react';
+  interface ComponentProps extends React.HTMLAttributes<HTMLElement> {
+    children?: React.ReactNode;
+  }
+  const component: React.ComponentType<ComponentProps>;
+  export default component;
+}
+
+// home 应用暴露的模块
+declare module 'home/HomeApp' {
+  import type React from 'react';
+  interface ComponentProps extends React.HTMLAttributes<HTMLElement> {
+    children?: React.ReactNode;
+  }
+  const component: React.ComponentType<ComponentProps>;
+  export default component;
+}
+
 
 // ============================================
 // 通用 Wildcard 声明

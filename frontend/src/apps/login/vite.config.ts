@@ -32,6 +32,10 @@ export default defineConfig({
     minify: false,
     cssCodeSplit: false
   },
+  preview: {
+    port: parseInt(port),
+    strictPort: true, 
+  },
   resolve: {
     alias: {
       '@shared': path.resolve(__dirname, '../../shared/src')
