@@ -1,0 +1,21 @@
+{
+  "name": "react-vite",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "generate": "node scripts/generate.js",
+    "add-gitignore": "node scripts/add_gitignore.js",
+    "build": "node scripts/build.js",
+    "dev": "node scripts/dev.js",
+    "preview": "pnpm kill-ports && pnpm -r --parallel run preview",
+    "kill-ports": "npx kill-port 5000 5001 5002 5003",
+    "start": "pnpm kill-ports && pnpm dev",
+    "dts": "echo 'Type definitions updated in src/dts/global.d.ts'"
+  },
+  "devDependencies": {
+    "@originjs/vite-plugin-federation": "^1.4.1",
+    "concurrently": "^9.2.1",
+    "kill-port": "^2.0.1",
+    "serve": "^14.2.5"
+  }
+}
