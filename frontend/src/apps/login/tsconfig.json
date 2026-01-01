@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["react", "react-dom"],
+
+    /* Bundler mode */
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "suppressImplicitAnyIndexWarnings": true,
+    
+    /* Path mapping */
+    "paths": {
+      "@/*": ["./src/*"],
+      "shared/store": ["../../shared/src/store/store.ts"],
+      "shared/Button": ["../../shared/src/components/Button.tsx"],
+      "shared/Header": ["../../shared/src/components/Header.tsx"],
+      "shared/SharedApp": ["../../shared/src/App.tsx"],
+      "shared/*": ["../../shared/src/*"],
+      "login/*": ["./src/*"]
+    },
+    "baseUrl": "."
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
