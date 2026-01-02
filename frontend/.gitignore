@@ -43,11 +43,11 @@ node_modules/
 
 # vuepress build output
 .vuepress/dist
-.dist
-.dist/**
 
 # Build output
 dist/
+.dist
+.dist/**
 
 # Serverless directories
 .serverless
