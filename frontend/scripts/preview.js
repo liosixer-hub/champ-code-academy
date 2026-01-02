@@ -306,6 +306,12 @@ function main() {
       process.exit(1);
     }
     
+    // 确保 shared 模块被包含，除非只预览 shared 本身
+    if (!selectedApps.includes('shared') && selectedApps.length > 1) {
+      selectedApps.unshift('shared');
+      console.log('ℹ️  自动添加 shared 模块作为依赖\n');
+    }
+    
     if (selectedApps.length === 1) {
       console.log(`🎯 预览应用: ${selectedApps[0]}\n`);
       // 清理端口
