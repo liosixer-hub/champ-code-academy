@@ -1,14 +1,38 @@
 import { useState } from "react";
 import Button from "shared/Button";
+import { useAppStore } from "shared/store";
 
 export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const setUser = useAppStore((state) => state.setUser);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login submitted:", { email, password });
-    // Handle login submission
+    setError("");
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      if (response.ok) {
+        const user = await response.json();
+        setUser(user);
+      } else {
+        setError('Invalid credentials');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Login failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,11 +87,14 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
           </a>
         </div>
 
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+
         <Button
           type="submit"
           className="w-full mt-8"
+          disabled={loading}
         >
-          Sign In
+          {loading ? 'Signing in...' : 'Sign In'}
         </Button>
       </form>
 
