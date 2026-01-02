@@ -21,21 +21,8 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": false,
-    /* Path mapping */
-    "paths": {
-      "@/*": ["./src/*"],
-      "shared/store": ["../../shared/src/store/store.ts"],
-      "shared/Button": ["../../shared/src/components/Button.tsx"],
-      "shared/Header": ["../../shared/src/components/Header.tsx"],
-      "shared/SharedApp": ["../../shared/src/App.tsx"],
-      "shared/*": ["../../shared/src/*"],
-      "login/*": ["../../apps/login/src/*"],
-      "dashboard/*": ["../../apps/dashboard/src/*"],
-      "home/*": ["../../apps/home/src/*"]
-    },
     "baseUrl": ".",
     "types": ["vite/client", "@types/react", "@types/react-dom"]
   },
-  "include": ["src"],
-  "files": ["../../dts/global.d.ts"]
+  "include": ["src", "../../dts/global.d.ts"],
 }

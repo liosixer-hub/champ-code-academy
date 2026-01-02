@@ -24,11 +24,30 @@ declare module 'shared/Header' {
 }
 
 declare module 'shared/store' {
-  interface StoreState {
-    [key: string]: unknown;
+  export interface Lesson {
+    id: string;
+    date: string;
+    type: 'Historic' | 'Upcoming' | 'Available' | 'Today';
+    subject: string;
+    students: string[];
+    tutor: string | null;
+    status: string;
   }
-  export const useAppStore: () => StoreState;
-  export const useUserStore: () => StoreState;
+
+  export interface AppState {
+    user: { name: string; email: string } | null;
+    isAuthenticated: boolean;
+    lessons: Lesson[];
+    loading: boolean;
+    error: string | null;
+    setUser: (user: { name: string; email: string }) => void;
+    logout: () => void;
+    fetchLessons: () => Promise<void>;
+    takeLesson: (lessonId: string) => void;
+  }
+
+  export const useAppStore: () => AppState;
+  export const useUserStore: () => any;
 }
 
 declare module 'shared/SharedApp' {
@@ -45,6 +64,7 @@ declare module 'login/LoginApp' {
   import type React from 'react';
   interface ComponentProps extends React.HTMLAttributes<HTMLElement> {
     children?: React.ReactNode;
+    onBackClick?: () => void;
   }
   const component: React.ComponentType<ComponentProps>;
   export default component;
@@ -65,6 +85,7 @@ declare module 'home/HomeApp' {
   import type React from 'react';
   interface ComponentProps extends React.HTMLAttributes<HTMLElement> {
     children?: React.ReactNode;
+    onLoginClick?: () => void;
   }
   const component: React.ComponentType<ComponentProps>;
   export default component;

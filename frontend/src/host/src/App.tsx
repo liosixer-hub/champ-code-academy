@@ -1,3 +1,4 @@
+/// <reference path="../../dts/global.d.ts" />
 import React, { Suspense, useState } from 'react';
 
 // Import shared module
@@ -10,7 +11,7 @@ const HomeApp = React.lazy(() => import('home/HomeApp'));
 
 function App() {
   const { isAuthenticated } = useAppStore(); // 使用共享状态
-  const [currentView, setCurrentView] = useState<'home' | 'login'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'login'>('login');
 
   // 如果已认证，显示 dashboard
   if (isAuthenticated) {
