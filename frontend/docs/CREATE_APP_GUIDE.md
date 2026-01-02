@@ -1,14 +1,14 @@
 # Sub-App 创建工具
 
-这是一个基于login模块的sub-app模板生成工具，用于快速创建新的微前端应用。
+这是一个基于 dashboard 模块的 sub-app 模板生成工具，用于快速创建新的微前端应用。
 
 ## 功能特性
 
-- ✅ 基于login模块的完整模板克隆
+- ✅ 基于 dashboard 模块的干净模板克隆
 - ✅ 自动更新配置文件（package.json、vite.config.ts等）
 - ✅ 支持自定义端口配置
 - ✅ 自动生成组件模板
-- ✅ 保留微前端Federation配置
+- ✅ 保留微前端 Federation 配置
 
 ## 使用方式
 
@@ -16,23 +16,23 @@
 
 ```bash
 # 创建一个新的sub-app（自动分配端口）
-pnpm create-app <appName>
+pnpm generate-app <appName>
 
 # 示例
-pnpm create-app dashboard
-pnpm create-app user-profile
-pnpm create-app settings
+pnpm generate-app user-profile
+pnpm generate-app settings
+pnpm generate-app admin
 ```
 
 ### 指定端口
 
 ```bash
 # 创建一个新的sub-app并指定端口
-pnpm create-app <appName> <port>
+pnpm generate-app <appName> <port>
 
 # 示例
-pnpm create-app dashboard 5003
-pnpm create-app user-profile 5004
+pnpm generate-app user-profile 5005
+pnpm generate-app settings 5006
 ```
 
 ## 命令详解
@@ -43,9 +43,9 @@ node scripts/create-app.js <appName> [port]
 
 **参数：**
 - `appName` (必需)：应用名称，只能包含小写字母、数字和连字符
-  - 示例：`dashboard`、`user-profile`、`admin-panel`
+  - 示例：`user-profile`、`admin-panel`、`data-analytics`
 - `port` (可选)：应用监听的端口号
-  - 如果不指定，需要手动配置环境变量
+  - 如果不指定，默认使用 5002，后续可通过环境变量配置
 
 **约束：**
 - 应用名称必须唯一（不能与已有app同名）
@@ -90,8 +90,8 @@ pnpm dev
 
 ```bash
 # .env 或 .env.local
-BASE_URL_DASHBOARD=http://localhost:5003
-BASE_URL_USER_PROFILE=http://localhost:5004
+BASE_URL_USER_PROFILE=http://localhost:5005
+BASE_URL_SETTINGS=http://localhost:5006
 ```
 
 ## 微前端集成
@@ -104,15 +104,15 @@ BASE_URL_USER_PROFILE=http://localhost:5004
 
 ## 示例
 
-### 创建dashboard应用
+### 创建user-profile应用
 
 ```bash
-pnpm create-app dashboard 5003
+pnpm generate-app user-profile 5005
 ```
 
 输出：
 ```
-Creating new app: dashboard
+Creating new app: user-profile
 ✓ Files copied
 ✓ Updated package.json
 ✓ Updated vite.config.ts
@@ -124,39 +124,39 @@ Creating new app: dashboard
 ✅ Successfully created new app!
 
 Next steps:
-1. cd frontend/src/apps/dashboard
+1. cd frontend/src/apps/user-profile
 2. pnpm install
 3. pnpm dev
 
-App will run on http://localhost:5003
+App will run on http://localhost:5005
 ```
 
-### 创建user-profile应用
+### 创建settings应用
 
 ```bash
-pnpm create-app user-profile 5004
+pnpm generate-app settings
 ```
 
-生成的`src/apps/user-profile/`目录结构与dashboard相同，但名称不同。
+生成的`src/apps/settings/`目录结构与user-profile相同，但名称不同。
 
 ## 故障排除
 
 ### 错误：App name is required
 确保提供了应用名称：
 ```bash
-pnpm create-app my-app
+pnpm generate-app my-app
 ```
 
 ### 错误：App '<appName>' already exists
 应用名称已存在，请使用不同的名称：
 ```bash
-pnpm create-app my-new-app
+pnpm generate-app my-new-app
 ```
 
 ### 错误：App name must contain only lowercase letters, numbers, and hyphens
 应用名称格式不正确。使用kebab-case格式：
-- ✅ 正确：`dashboard`、`user-profile`、`admin-panel`
-- ❌ 错误：`Dashboard`、`user_profile`、`AdminPanel`
+- ✅ 正确：`user-profile`、`admin-panel`、`data-analytics`
+- ❌ 错误：`UserProfile`、`user_profile`、`AdminPanel`
 
 ## 开发建议
 
@@ -178,6 +178,6 @@ pnpm create-app my-new-app
 ## 注意事项
 
 - 脚本在创建失败时会自动清理已生成的文件
-- 生成的app会继承login模块的所有依赖
+- 生成的app会继承dashboard模块的所有依赖
 - 需要在app目录中执行`pnpm install`以安装依赖
 - 端口配置需要确保不与其他app冲突

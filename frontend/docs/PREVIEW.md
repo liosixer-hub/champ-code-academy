@@ -6,64 +6,46 @@ Preview 脚本用于快速预览构建后的应用。它使用 `serve` 静态文
 
 ## 基础用法
 
-### 预览所有应用
+### 交互式预览
+
 ```bash
 pnpm preview
 ```
-启动所有构建完成的应用的预览服务器。
 
-**输出示例：**
+启动交互模式，选择要预览的应用。
+
+**输入提示：**
 ```
-🎯 预览所有应用
-
-🔧 准备清理端口...
-✓ 已清理端口 5002
-✓ 已清理端口 5001
-
-📦 启动预览服务器...
-
-▶️  login: http://localhost:5002
-▶️  shared: http://localhost:5001
-
-✅ 所有预览服务器已启动！
-
-🔗 访问地址:
-   login        → http://localhost:5002
-   shared       → http://localhost:5001
-
-💡 提示: 按 Ctrl+C 停止所有服务器
+请输入要预览的应用 (all, host, shared, login, dashboard, home):
 ```
+
+### 预览所有应用
+
+```bash
+pnpm preview all
+```
+
+或在交互模式中输入 `all`。
 
 ### 预览单个应用
+
 ```bash
-pnpm preview shared
+pnpm preview dashboard
 ```
-启动指定应用的预览服务器。
 
-**输出示例：**
-```
-🎯 预览应用: shared
+或在交互模式中选择特定应用。
 
-✓ 已清理端口 5001
-
-🚀 启动 shared 预览服务器...
-📍 访问地址: http://localhost:5001
-📁 静态文件夹: D:\...\frontend\dist\shared
-⏹️  按 Ctrl+C 停止服务器
-
-   Serving!
-
-   - Local:    http://localhost:5001
-   - Network:  use --host to expose
-
-   Copied local address to clipboard!
-```
+**注意**: 预览单个应用时会自动添加 shared 依赖。
 
 ### 预览多个应用
+
 ```bash
-pnpm preview login shared host
+pnpm preview login dashboard
 ```
-启动指定的多个应用的预览服务器。
+
+或在交互模式中输入多个应用名（空格分隔）。
+
+**自动依赖**: 如果选择的应用需要 shared，会自动添加。
 
 ## 端口配置
 
@@ -102,21 +84,26 @@ pnpm preview login
 ## 常见命令
 
 ```bash
-# 显示帮助信息
-pnpm preview --help
-
-# 预览所有应用
+# 交互式选择预览应用
 pnpm preview
 
-# 预览 shared 应用
-pnpm preview shared
+# 预览所有应用
+pnpm preview all
 
-# 预览多个应用
-pnpm preview login shared
+# 预览单个应用（自动添加 shared 依赖）
+pnpm preview dashboard
+
+# 预览多个应用（自动添加 shared 依赖）
+pnpm preview login dashboard
+
+# 显示帮助信息
+pnpm preview --help
 ```
 
 ## 特性
 
+✅ **交互式选择** - 支持运行时选择要预览的应用
+✅ **自动依赖管理** - 自动添加 shared 等必要依赖
 ✅ **自动端口清理** - 启动前自动清理被占用的端口
 ✅ **多应用支持** - 可同时预览多个应用
 ✅ **本地和网络访问** - 支持本地和网络访问

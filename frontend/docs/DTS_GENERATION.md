@@ -7,7 +7,7 @@
 ## 工作流程
 
 ### 自动生成（推荐）
-在执行 `pnpm build` 或 `npm build` 时，脚本会自动在构建完成后执行：
+在执行 `pnpm build` 时，脚本会自动在构建完成后执行：
 
 ```bash
 pnpm build
@@ -39,21 +39,30 @@ declare module 'shared/Button' {
   const component: React.ComponentType<any>;
   export default component;
 }
+
+declare module 'shared/Header' {
+  const component: React.ComponentType<any>;
+  export default component;
+}
 ```
 
 ### Store 声明
 ```typescript
 declare module 'shared/store' {
   export const useAppStore: any;
-  export const useUserStore: any;
   [key: string]: any;
 }
 ```
 
-### Wildcard 声明
+### 应用组件声明
 ```typescript
-declare module 'shared/*' {
-  const component: any;
+declare module 'login/LoginApp' {
+  const component: React.ComponentType<any>;
+  export default component;
+}
+
+declare module 'dashboard/DashboardApp' {
+  const component: React.ComponentType<any>;
   export default component;
 }
 ```
@@ -80,8 +89,24 @@ federation({
   filename: 'remoteEntry.js',
   exposes: {
     './Button': './src/components/Button.tsx',      // 自动生成组件声明
+    './Header': './src/components/Header.tsx',      // 自动生成组件声明
     './store': './src/store/store.ts',              // 自动生成 store 声明
-    './utils': './src/utils/index.ts',              // 自动生成模块声明
+  },
+  shared: ['react', 'react-dom', 'zustand']
+})
+```
+
+对于子应用：
+
+```typescript
+federation({
+  name: 'dashboard',
+  filename: 'remoteEntry.js',
+  exposes: {
+    './DashboardApp': './src/App.tsx',              // 自动生成应用组件声明
+  },
+  remotes: {
+    shared: sharedUrl + '/assets/remoteEntry.js',
   },
   shared: ['react', 'react-dom', 'zustand']
 })
@@ -123,7 +148,9 @@ federation({
 
 运行脚本时会输出扫描结果：
 ```
-✓ 扫描 shared: 找到 4 个暴露的模块
+✓ 扫描 shared: 找到 3 个暴露的模块
 ✓ 扫描 login: 找到 1 个暴露的模块
+✓ 扫描 dashboard: 找到 1 个暴露的模块
+✓ 扫描 home: 找到 1 个暴露的模块
 ✅ 类型声明文件已生成: src/dts/global.d.ts
 ```
