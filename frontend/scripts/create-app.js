@@ -4,9 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Create a new sub-app from login template
+ * Create a new sub-app from dashboard template
  * Usage: node scripts/create-app.js <appName> [port]
- * Example: node scripts/create-app.js dashboard 5003
+ * Example: node scripts/create-app.js myapp 5004
  */
 
 const appName = process.argv[2];
@@ -25,7 +25,7 @@ if (!/^[a-z0-9-]+$/.test(appName)) {
   process.exit(1);
 }
 
-const sourceDir = path.join(__dirname, '../src/apps/login');
+const sourceDir = path.join(__dirname, '../src/apps/dashboard');
 const targetDir = path.join(__dirname, '../src/apps', appName);
 const capitalizedAppName = appName
   .split('-')
@@ -83,8 +83,14 @@ try {
   
   // Replace federation name
   viteConfig = viteConfig.replace(
-    /name: ['"]login['"]/,
+    /name: ['"]dashboard['"]/,
     `name: '${appName}'`
+  );
+  
+  // Replace exposes
+  viteConfig = viteConfig.replace(
+    `'./DashboardApp': './src/App.tsx'`,
+    `'./${capitalizedAppName}App': './src/App.tsx'`
   );
   
   // Replace port if provided
@@ -97,11 +103,11 @@ try {
       `const sharedUrl = process.env.BASE_URL_SHARED || 'http://localhost:5001';\n`
     );
     viteConfig = viteConfig.replace(
-      /const loginUrl = process\.env\.BASE_URL_LOGIN \|\| 'http:\/\/localhost:\d+';/,
+      /const dashboardUrl = process\.env\.BASE_URL_DASHBOARD \|\| 'http:\/\/localhost:\d+';/,
       `const ${urlVarName} = process.env.${baseUrlVarName} || 'http://localhost:${port}';`
     );
     viteConfig = viteConfig.replace(
-      /const port = new URL\(loginUrl\)\.port;/,
+      /const port = new URL\(dashboardUrl\)\.port;/,
       `const port = new URL(${urlVarName}).port;`
     );
   } else {
@@ -110,11 +116,11 @@ try {
     const urlVarName = `${appName}Url`;
     
     viteConfig = viteConfig.replace(
-      /const loginUrl = process\.env\.BASE_URL_LOGIN \|\| 'http:\/\/localhost:5002';/,
+      /const dashboardUrl = process\.env\.BASE_URL_DASHBOARD \|\| 'http:\/\/localhost:5003';/,
       `const ${urlVarName} = process.env.${baseUrlVarName} || 'http://localhost:5002';`
     );
     viteConfig = viteConfig.replace(
-      /const port = new URL\(loginUrl\)\.port;/,
+      /const port = new URL\(dashboardUrl\)\.port;/,
       `const port = new URL(${urlVarName}).port;`
     );
   }
