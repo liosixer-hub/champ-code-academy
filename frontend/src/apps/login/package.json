@@ -26,5 +26,9 @@
     "tailwindcss": "^4.1.18",
     "vite": "^6.4.1",
     "zustand": "^5.0.9"
+  },
+  "dependencies": {
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1"
   }
 }
