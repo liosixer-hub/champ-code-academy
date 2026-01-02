@@ -8,7 +8,7 @@ const frontendPath = path.join(__dirname, '..');
 const sharedPath = path.join(frontendPath, 'src', 'shared');
 const appsPath = path.join(frontendPath, 'src', 'apps');
 const hostPath = path.join(frontendPath, 'src', 'host');
-const envDevPath = path.join(frontendPath, '.env.dev');
+const envDevPath = path.join(frontendPath, '.env.development');
 
 // 获取命令行参数 (e.g., npm run dev login 或 npm run dev)
 let targetApp = process.argv[2];

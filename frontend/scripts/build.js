@@ -5,7 +5,7 @@ const { execSync } = require('child_process');
 // 定义路径
 const srcDir = path.join(__dirname, '..', 'src');
 const distDir = path.join(__dirname, '..', 'dist');
-const envProdPath = path.join(__dirname, '..', '.env.prod');
+const envProdPath = path.join(__dirname, '..', '.env.production');
 
 // 加载环境变量的辅助函数
 function loadEnvProd() {
