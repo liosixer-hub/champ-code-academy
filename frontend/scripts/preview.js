@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn, execSync } = require('child_process');
+const readline = require('readline');
 
 // 定义路径
 const distDir = path.join(__dirname, '..', 'dist');
@@ -252,9 +253,10 @@ function showUsage() {
   
   console.log('\n📋 预览脚本使用说明\n');
   console.log('用法:');
-  console.log('  pnpm preview                      - 预览所有应用');
+  console.log('  pnpm preview                      - 交互式选择预览应用');
+  console.log('  pnpm preview all                  - 预览所有应用');
   console.log('  pnpm preview <app-name>           - 预览指定应用');
-  console.log('  pnpm preview login shared host    - 预览多个应用\n');
+  console.log('  pnpm preview login dashboard      - 预览多个应用\n');
   
   console.log('可用的应用:');
   if (apps.length === 0) {
@@ -269,7 +271,7 @@ function showUsage() {
 }
 
 // 主函数
-function main() {
+async function main() {
   if (!fs.existsSync(distDir)) {
     console.error('❌ dist 目录不存在，请先运行 pnpm build');
     process.exit(1);
@@ -283,16 +285,35 @@ function main() {
     process.exit(1);
   }
   
-  if (!target) {
+  let selectedTarget = target;
+  
+  if (!selectedTarget) {
+    // 提示用户输入
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    selectedTarget = await new Promise((resolve) => {
+      const appList = apps.join(', ');
+      rl.question(`请输入要预览的应用 (all, ${appList}): `, (answer) => {
+        rl.close();
+        resolve(answer.trim());
+      });
+    });
+  }
+  
+  if (!selectedTarget || selectedTarget === 'all') {
     // 预览所有应用
     console.log('🎯 预览所有应用\n');
     startMultiplePreviewServers(apps);
-  } else if (args.length === 1 && target === '--help') {
+  } else if (selectedTarget === '--help') {
     showUsage();
   } else {
     // 预览指定的应用
-    const selectedApps = args.filter(app => apps.includes(app));
-    const invalidApps = args.filter(app => !apps.includes(app));
+    const inputApps = selectedTarget.split(' ').filter(app => app.trim());
+    const selectedApps = inputApps.filter(app => apps.includes(app));
+    const invalidApps = inputApps.filter(app => !apps.includes(app));
     
     if (invalidApps.length > 0) {
       console.error(`❌ 无效的应用名: ${invalidApps.join(', ')}`);
@@ -307,7 +328,7 @@ function main() {
     }
     
     // 确保 shared 模块被包含，除非只预览 shared 本身
-    if (!selectedApps.includes('shared') && selectedApps.length > 1) {
+    if (!selectedApps.includes('shared') && !selectedApps.every(app => app === 'shared')) {
       selectedApps.unshift('shared');
       console.log('ℹ️  自动添加 shared 模块作为依赖\n');
     }
