@@ -8,6 +8,7 @@ const dashboardUrl = process.env.BASE_URL_DASHBOARD || 'http://localhost:5003';
 const homeUrl = process.env.BASE_URL_HOME || 'http://localhost:5004';
 
 export default defineConfig({
+  base: '/',
   plugins: [
     react(),
     federation({

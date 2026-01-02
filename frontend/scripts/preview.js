@@ -21,12 +21,29 @@ function killPorts(...ports) {
 
 function getApplications() {
   const apps = [];
-  const distItems = fs.readdirSync(distDir);
+  const champDir = distDir;
+  
+  if (!fs.existsSync(champDir)) {
+    console.error('❌ dist 目录不存在，请先运行构建');
+    process.exit(1);
+  }
+  
+  const distItems = fs.readdirSync(champDir);
+  
+  // 检查是否有index.html，如果有则是host应用
+  if (fs.existsSync(path.join(champDir, 'index.html'))) {
+    apps.push('host');
+  }
   
   for (const item of distItems) {
-    const itemPath = path.join(distDir, item);
-    if (fs.statSync(itemPath).isDirectory()) {
-      apps.push(item);
+    const itemPath = path.join(champDir, item);
+    if (fs.statSync(itemPath).isDirectory() && item !== 'assets') {
+      // 检查是否是应用目录（有index.html或remoteEntry.js）
+      const indexHtml = path.join(itemPath, 'index.html');
+      const remoteEntry = path.join(itemPath, 'assets', 'remoteEntry.js');
+      if (fs.existsSync(indexHtml) || fs.existsSync(remoteEntry)) {
+        apps.push(item);
+      }
     }
   }
   
@@ -47,7 +64,12 @@ function getAppPort(appName) {
 
 // 启动预览服务器
 function startPreviewServer(appName) {
-  const appPath = path.join(distDir, appName);
+  let appPath;
+  if (appName === 'host') {
+    appPath = distDir;
+  } else {
+    appPath = path.join(distDir, appName);
+  }
   const port = getAppPort(appName);
   
   if (!fs.existsSync(appPath)) {
@@ -78,9 +100,8 @@ function startPreviewServer(appName) {
   };
   fs.writeFileSync(serveConfigPath, JSON.stringify(config, null, 2));
   
-  const server = spawn('npx', ['serve', '-c', serveConfigPath, '-l', String(port)], {
-    stdio: 'inherit',
-    shell: true
+  const server = spawn('cmd', ['/c', 'pnpm', 'exec', 'serve', '-c', serveConfigPath, '-l', String(port)], {
+    stdio: 'inherit'
   });
   
   // 监听服务器错误
@@ -133,7 +154,12 @@ function startMultiplePreviewServers(appNames) {
   
   appNames.forEach(appName => {
     const port = getAppPort(appName);
-    const appPath = path.join(distDir, appName);
+    let appPath;
+    if (appName === 'host') {
+      appPath = distDir;
+    } else {
+      appPath = path.join(distDir, appName);
+    }
     
     if (!fs.existsSync(appPath)) {
       console.error(`❌ 应用 ${appName} 的 dist 目录不存在`);

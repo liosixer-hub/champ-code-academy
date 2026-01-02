@@ -6,6 +6,7 @@ const sharedUrl = process.env.BASE_URL_SHARED || 'http://localhost:5001';
 const port = new URL(sharedUrl).port;
 
 export default defineConfig({
+  base: '/',
   plugins: [
     react(),
     federation({
@@ -21,14 +22,6 @@ export default defineConfig({
     })
   ] as any[],
   build: {
-    lib: {
-      entry: './src/index.ts',
-      name: 'shared',
-      formats: ['es'],
-    },
-    rollupOptions: {
-      external: [],
-    },
     modulePreload: false,
     target: 'esnext',
     minify: false,

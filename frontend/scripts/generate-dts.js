@@ -13,22 +13,22 @@ const appConfigs = [
   {
     name: 'shared',
     configPath: 'src/shared/vite.config.ts',
-    distPath: 'src/shared/dist'
+    distPath: 'dist/shared'
   },
   {
     name: 'login',
     configPath: 'src/apps/login/vite.config.ts',
-    distPath: 'src/apps/login/dist'
+    distPath: 'dist/login'
   },
   {
     name: 'dashboard',
     configPath: 'src/apps/dashboard/vite.config.ts',
-    distPath: 'src/apps/dashboard/dist'
+    distPath: 'dist/dashboard'
   },
   {
     name: 'home',
     configPath: 'src/apps/home/vite.config.ts',
-    distPath: 'src/apps/home/dist'
+    distPath: 'dist/home'
   },
 ];
 
@@ -61,27 +61,40 @@ function parseViteConfig(filePath) {
 function generateAppDts(appName, exposes) {
   const declarations = [];
   
+  // 定义额外props
+  const extraPropsMap = {
+    'home/HomeApp': ['onLoginClick?: () => void;'],
+    'login/LoginApp': ['onBackClick?: () => void;'],
+  };
+  
   declarations.push(`// ${appName} 应用暴露的模块`);
   
   for (const [expose, filePath] of Object.entries(exposes)) {
     const moduleName = expose.replace('./', '');
+    const fullModuleName = `${appName}/${moduleName}`;
     
     // 判断是否是 TypeScript/TSX 文件
     const isTypeScript = filePath.endsWith('.ts') || filePath.endsWith('.tsx');
     
     if (filePath.endsWith('.tsx') || filePath.endsWith('App.tsx')) {
       // React 组件
-      declarations.push(`declare module '${appName}/${moduleName}' {`);
+      declarations.push(`declare module '${fullModuleName}' {`);
       declarations.push(`  import type React from 'react';`);
       declarations.push(`  interface ComponentProps extends React.HTMLAttributes<HTMLElement> {`);
       declarations.push(`    children?: React.ReactNode;`);
+      // 添加额外props
+      if (extraPropsMap[fullModuleName]) {
+        for (const prop of extraPropsMap[fullModuleName]) {
+          declarations.push(`    ${prop}`);
+        }
+      }
       declarations.push(`  }`);
       declarations.push(`  const component: React.ComponentType<ComponentProps>;`);
       declarations.push(`  export default component;`);
       declarations.push(`}`);
     } else if (filePath.endsWith('.ts') && moduleName.includes('store')) {
       // Store 文件
-      declarations.push(`declare module '${appName}/${moduleName}' {`);
+      declarations.push(`declare module '${fullModuleName}' {`);
       declarations.push(`  interface StoreState {`);
       declarations.push(`    [key: string]: unknown;`);
       declarations.push(`  }`);
@@ -90,7 +103,7 @@ function generateAppDts(appName, exposes) {
       declarations.push(`}`);
     } else if (filePath.endsWith('.tsx')) {
       // 其他 TSX
-      declarations.push(`declare module '${appName}/${moduleName}' {`);
+      declarations.push(`declare module '${fullModuleName}' {`);
       declarations.push(`  import type React from 'react';`);
       declarations.push(`  interface ComponentProps extends React.HTMLAttributes<HTMLElement> {`);
       declarations.push(`    children?: React.ReactNode;`);
@@ -100,7 +113,7 @@ function generateAppDts(appName, exposes) {
       declarations.push(`}`);
     } else if (isTypeScript) {
       // 其他 TypeScript 文件
-      declarations.push(`declare module '${appName}/${moduleName}' {`);
+      declarations.push(`declare module '${fullModuleName}' {`);
       declarations.push(`  export * from '${filePath.replace(/\\/g, '/')}';`);
       declarations.push(`}`);
     }
@@ -144,7 +157,7 @@ function generateDts() {
   allDeclarations.push('// ============================================');
   allDeclarations.push('');
   
-  const remoteApps = ['shared', 'login', 'dashboard', 'home'];
+  const remoteApps = ['host', 'shared', 'login', 'dashboard', 'home'];
   for (const app of remoteApps) {
     allDeclarations.push(`declare module '${app}/*' {`);
     allDeclarations.push(`  import type React from 'react';`);

@@ -1,7 +1,7 @@
-import { importShared } from './__federation_fn_import-DUVrMs8x.js';
-import Button from './__federation_expose_Button-BX1kaGVJ.js';
-import Header from './__federation_expose_Header-CN5wgNTM.js';
-import { useAppStore } from './__federation_expose_Store-Dnu8MyTI.js';
+import { importShared } from './__federation_fn_import--c_ssHJ1.js';
+import Button from './__federation_expose_Button-B9TMty6v.js';
+import Header from './__federation_expose_Header-D9Kus-DX.js';
+import { useAppStore } from './__federation_expose_Store-Ceb3PtzI.js';
 
 const {jsx,jsxs} = await importShared('react/jsx-runtime');
 function SharedApp() {

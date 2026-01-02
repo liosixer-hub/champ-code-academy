@@ -152,8 +152,10 @@ async function main() {
         }
       }
       
-      // 最后启动host dev
-      await startProcess(hostPath, 'pnpm dev', 'host dev');
+      // 最后启动host preview
+      console.log('构建 host...');
+      executeCommand(hostPath, 'pnpm build');
+      await startProcess(hostPath, 'pnpm preview --port 5000', 'host preview');
     }
 
     console.log('\n所有服务器已启动，按 Ctrl+C 停止');

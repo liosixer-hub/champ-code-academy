@@ -66,11 +66,21 @@ const {jsx,jsxs} = await importShared('react/jsx-runtime');
 
 const __federation_var_sharedstore = await __federation_method_getRemote("shared" , "./store");
  let {useAppStore} = __federation_var_sharedstore;
-function HomeApp({ onBackClick }) {
+function HomeApp({ onLoginClick }) {
   useAppStore();
   return /* @__PURE__ */ jsx("div", { className: "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-md w-full space-y-8", children: [
     /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("h2", { className: "mt-6 text-center text-3xl font-extrabold text-gray-900", children: "Home" }) }),
-    /* @__PURE__ */ jsx("div", { className: "mt-8 space-y-6", children: /* @__PURE__ */ jsx("p", { className: "text-center text-gray-600", children: "This is the home application. Start building your features here." }) })
+    /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-6", children: [
+      /* @__PURE__ */ jsx("p", { className: "text-center text-gray-600", children: "This is the home application. Start building your features here." }),
+      /* @__PURE__ */ jsx("div", { className: "text-center", children: /* @__PURE__ */ jsx(
+        "button",
+        {
+          onClick: onLoginClick,
+          className: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded",
+          children: "Login"
+        }
+      ) })
+    ] })
   ] }) });
 }
 

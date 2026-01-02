@@ -1,4 +1,4 @@
-import { importShared } from './__federation_fn_import-DUVrMs8x.js';
+import { importShared } from './__federation_fn_import--c_ssHJ1.js';
 
 const {jsx} = await importShared('react/jsx-runtime');
 

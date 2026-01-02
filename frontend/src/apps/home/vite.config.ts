@@ -8,6 +8,7 @@ const homeUrl = process.env.BASE_URL_HOME || 'http://localhost:5004';
 const port = new URL(homeUrl).port;
 
 export default defineConfig({
+  base: '/',
   plugins: [
     react(),
     federation({

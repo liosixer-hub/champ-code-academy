@@ -2,10 +2,10 @@ import React from 'react';
 import { useAppStore } from 'shared/store';
 
 interface HomeAppProps {
-  onBackClick?: () => void;
+  onLoginClick?: () => void;
 }
 
-function HomeApp({ onBackClick }: HomeAppProps) {
+function HomeApp({ onLoginClick }: HomeAppProps) {
   const storeState = useAppStore();
 
   return (
@@ -20,6 +20,14 @@ function HomeApp({ onBackClick }: HomeAppProps) {
           <p className="text-center text-gray-600">
             This is the home application. Start building your features here.
           </p>
+          <div className="text-center">
+            <button
+              onClick={onLoginClick}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Login
+            </button>
+          </div>
         </div>
       </div>
     </div>

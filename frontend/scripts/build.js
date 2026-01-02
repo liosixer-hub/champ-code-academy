@@ -112,11 +112,16 @@ projects.forEach(projectPath => {
 
     // 构建成功后，复制 dist 到 frontend/dist
     const projectDistSrc = path.join(projectPath, 'dist');
-    const projectDistDest = path.join(distDir, projectName);
+    let projectDistDest;
+    if (projectName === 'host') {
+      projectDistDest = distDir;
+    } else {
+      projectDistDest = path.join(distDir, projectName);
+    }
 
     if (fs.existsSync(projectDistSrc)) {
-      // 如果目标存在，先删除
-      if (fs.existsSync(projectDistDest)) {
+      // 如果目标存在，先删除（但host不删除，因为与其他应用共存）
+      if (fs.existsSync(projectDistDest) && projectName !== 'host') {
         fs.rmSync(projectDistDest, { recursive: true, force: true });
       }
       // 复制目录

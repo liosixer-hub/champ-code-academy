@@ -2,7 +2,7 @@ import { importShared } from './__federation_fn_import--c_ssHJ1.js';
 import { g as getDefaultExportFromCjs } from './_commonjsHelpers-B85MJLTf.js';
 import { r as requireReact } from './index-CzObSnfa.js';
 import { r as requireReactDom } from './index-DrZSdBta.js';
-import HomeApp from './__federation_expose_HomeApp-D2fIfASm.js';
+import SharedApp from './__federation_expose_SharedApp-Cz7exdew.js';
 
 var client = {exports: {}};
 
@@ -16449,5 +16449,5 @@ const {jsx} = await importShared('react/jsx-runtime');
 
 const React = await importShared('react');
 ReactDOM.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsx(React.StrictMode, { children: /* @__PURE__ */ jsx(HomeApp, {}) })
+  /* @__PURE__ */ jsx(React.StrictMode, { children: /* @__PURE__ */ jsx(SharedApp, {}) })
 );
