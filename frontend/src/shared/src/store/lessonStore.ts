@@ -1,19 +1,32 @@
-import { importShared } from './__federation_fn_import--c_ssHJ1.js';
+import { create } from 'zustand'
+import { useUserStore } from './userStore'
+import { useCommonStore } from './commonStore'
 
-const {create} = await importShared('zustand');
+export interface Lesson {
+  id: string
+  date: string
+  type: 'Historic' | 'Upcoming' | 'Available' | 'Today'
+  subject: string
+  students: string[]
+  tutor: string | null
+  status: string
+}
 
-const useAppStore = create((set, get) => ({
-  user: null,
-  isAuthenticated: false,
+interface LessonState {
+  lessons: Lesson[]
+  fetchLessons: () => Promise<void>
+  takeLesson: (lessonId: string) => void
+}
+
+export const useLessonStore = create<LessonState>((set) => ({
   lessons: [],
-  loading: false,
-  error: null,
-  setUser: (user) => set({ user, isAuthenticated: true }),
-  logout: () => set({ user: null, isAuthenticated: false, lessons: [] }),
   fetchLessons: async () => {
-    set({ loading: true, error: null });
+    const commonStore = useCommonStore.getState()
+    commonStore.setLoading(true)
+    commonStore.setError(null)
     try {
-      const mockLessons = [
+      // Mock data - replace with real API
+      const mockLessons: Lesson[] = [
         {
           id: "L001",
           date: "2025-10-28T14:00:00Z",
@@ -104,20 +117,24 @@ const useAppStore = create((set, get) => ({
           tutor: "Sarah Tan",
           status: "Confirmed"
         }
-      ];
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      set({ lessons: mockLessons, loading: false });
+      ]
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500))
+      set({ lessons: mockLessons })
+      commonStore.setLoading(false)
     } catch (error) {
-      set({ error: error.message, loading: false });
+      commonStore.setError((error as Error).message)
+      commonStore.setLoading(false)
     }
   },
-  takeLesson: (lessonId) => {
-    const lessons = get().lessons.map(
-      (lesson) => lesson.id === lessonId ? { ...lesson, type: "Upcoming", tutor: get().user?.name || null, status: "Confirmed" } : lesson
-    );
-    set({ lessons });
+  takeLesson: (lessonId: string) => {
+    const user = useUserStore.getState().user
+    set((state) => ({
+      lessons: state.lessons.map(lesson =>
+        lesson.id === lessonId
+          ? { ...lesson, type: 'Upcoming' as const, tutor: user?.name || null, status: 'Confirmed' }
+          : lesson
+      )
+    }))
   }
-}));
-const useUserStore = useAppStore;
-
-export { useAppStore, useUserStore };
+}))

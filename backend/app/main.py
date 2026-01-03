@@ -42,3 +42,7 @@ def login(request: LoginRequest):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
 # TODO: 在后续步骤实现具体 Login 和 Lesson 数据接口
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
