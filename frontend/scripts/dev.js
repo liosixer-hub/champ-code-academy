@@ -10,8 +10,23 @@ const appsPath = path.join(frontendPath, 'src', 'apps');
 const hostPath = path.join(frontendPath, 'src', 'host');
 const envDevPath = path.join(frontendPath, '.env.development');
 
-// 获取命令行参数 (e.g., npm run dev login 或 npm run dev)
-let targetApp = process.argv[2];
+// 获取可用应用列表
+function getAvailableApps() {
+  const apps = [];
+  if (fs.existsSync(appsPath)) {
+    const items = fs.readdirSync(appsPath);
+    for (const item of items) {
+      const itemPath = path.join(appsPath, item);
+      if (fs.statSync(itemPath).isDirectory()) {
+        const packageJsonPath = path.join(itemPath, 'package.json');
+        if (fs.existsSync(packageJsonPath)) {
+          apps.push(item);
+        }
+      }
+    }
+  }
+  return apps;
+}
 
 const processes = [];
 
@@ -89,17 +104,36 @@ async function main() {
     const killCommand = `kill-port ${ports.join(' ')}`;
     executeCommand(frontendPath, killCommand);
 
-    if (!targetApp) {
-      // 提示用户输入
+    // 获取可用应用列表
+    const availableApps = getAvailableApps();
+    const options = ['all', 'host', 'shared', ...availableApps];
+    
+    // 检查是否有命令行参数
+    const hasArgs = process.argv.slice(2).length > 0;
+    let targetApp = process.argv[2];
+
+    if (!hasArgs && process.stdin.isTTY) {
+      // 交互式模式：列出选项并让用户选择
+      console.log('可用的选项：');
+      options.forEach((option, index) => {
+        console.log(`${index + 1}. ${option}`);
+      });
+
       const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
       });
 
       targetApp = await new Promise((resolve) => {
-        rl.question('请输入要启动的应用 (all, host, shared, login, dashboard, home): ', (answer) => {
+        rl.question('请选择: ', (answer) => {
           rl.close();
-          resolve(answer.trim());
+          const index = parseInt(answer) - 1;
+          if (!isNaN(index) && index >= 0 && index < options.length) {
+            resolve(options[index]);
+          } else {
+            // 如果输入不是数字，视为直接输入的应用名
+            resolve(answer.trim());
+          }
         });
       });
     }

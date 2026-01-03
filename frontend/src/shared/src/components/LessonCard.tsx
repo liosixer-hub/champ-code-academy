@@ -39,31 +39,31 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onTake }) => {
   const canTake = onTake && lesson.type === 'Available';
 
   return (
-    <div className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-5 border border-gray-100">
+    <div className="bg-white dark:bg-slate-900 rounded-lg shadow hover:shadow-lg transition-shadow p-5 border border-gray-100 dark:border-slate-700">
       {/* Header with Subject and Badge */}
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             {lesson.subject}
           </h3>
-          <p className="text-sm text-gray-500 mt-1">{lessonType}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{lessonType}</p>
         </div>
       </div>
 
       {/* Date and Time */}
-      <div className="space-y-2 mb-4 text-sm text-gray-700">
+      <div className="space-y-2 mb-4 text-sm text-gray-700 dark:text-gray-300">
         <p>
-          <span className="font-medium text-gray-600">📅</span> {formattedDate}
+          <span className="font-medium text-gray-600 dark:text-gray-400">📅</span> {formattedDate}
         </p>
         <p>
-          <span className="font-medium text-gray-600">🕐</span> {formattedTime}
+          <span className="font-medium text-gray-600 dark:text-gray-400">🕐</span> {formattedTime}
         </p>
       </div>
 
       {/* Students */}
-      <div className="mb-4 p-3 bg-gray-50 rounded">
-        <p className="text-sm font-medium text-gray-600 mb-1">Student(s)</p>
-        <p className="text-sm text-gray-800">{studentsDisplay}</p>
+      <div className="mb-4 p-3 bg-gray-50 dark:bg-slate-800 rounded">
+        <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Student(s)</p>
+        <p className="text-sm text-gray-800 dark:text-gray-200">{studentsDisplay}</p>
       </div>
 
       {/* Button */}

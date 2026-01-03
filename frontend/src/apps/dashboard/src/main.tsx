@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { App } from './App.tsx'
+import { DashboardApp } from './App.tsx'
 import { useLessonStore, useCommonStore } from 'shared/store'
 import './index.css'
 
@@ -9,13 +9,7 @@ const AppWithStore: React.FC = () => {
   const { loading, error } = useCommonStore();
 
   return (
-    <App
-      lessons={lessons}
-      loading={loading}
-      error={error}
-      onFetchLessons={fetchLessons}
-      onTakeLesson={takeLesson}
-    />
+    <DashboardApp />
   );
 };
 
