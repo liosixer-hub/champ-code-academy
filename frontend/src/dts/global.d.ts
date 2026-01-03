@@ -17,6 +17,10 @@ declare module 'shared/store' {
   export const useUserStore: () => StoreState;
 }
 
+declare module 'shared/entity' {
+  export * from './src/entity/index.ts';
+}
+
 declare module 'shared/SharedApp' {
   import type React from 'react';
   interface ComponentProps extends React.HTMLAttributes<HTMLElement> {

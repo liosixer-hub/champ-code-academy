@@ -6,10 +6,13 @@ const currentImports = {};
       return __federation_import('./__federation_expose_Components-Cc1-sm1F.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},
 "./store":()=>{
       dynamicLoadingCss(["style-lLRMo-G3.css"], false, './store');
-      return __federation_import('./__federation_expose_Store-B7rdGIfb.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},
+      return __federation_import('./__federation_expose_Store-BG2bglWO.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},
+"./entity":()=>{
+      dynamicLoadingCss(["style-lLRMo-G3.css"], false, './entity');
+      return __federation_import('./__federation_expose_Entity-l0sNRNKZ.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},
 "./SharedApp":()=>{
       dynamicLoadingCss(["style-lLRMo-G3.css"], false, './SharedApp');
-      return __federation_import('./__federation_expose_SharedApp-BSURLZRn.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
+      return __federation_import('./__federation_expose_SharedApp-Bh7uKhh5.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
       const seen = {};
       const dynamicLoadingCss = (cssFilePaths, dontAppendStylesToHead, exposeItemName) => {
         const metaUrl = import.meta.url;

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Button } from "shared/components";
-import { useAppStore } from "shared/store";
+import { useUserStore } from "shared/store";
 
 export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => void }) {
   const [email, setEmail] = useState("user@example.com");
   const [password, setPassword] = useState("password");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const setUser = useAppStore((state) => state.setUser);
+  const setUser = useUserStore((state) => state.setUser);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,9 +1,9 @@
 import Button from './components/Button';
 import Header from './components/Header';
-import { useAppStore } from './store/store';
+import { useUserStore } from './store';
 
 function SharedApp() {
-  const { user, isAuthenticated, setUser, logout } = useAppStore();
+  const { user, isAuthenticated, setUser, logout } = useUserStore();
 
   const handleLoginDemo = () => {
     setUser({ name: 'Demo User', email: 'demo@example.com' });

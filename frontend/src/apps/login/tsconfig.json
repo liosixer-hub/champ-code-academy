@@ -24,7 +24,7 @@
     /* Path mapping */
     "paths": {
       "@/*": ["./src/*"],
-      "shared/store": ["../../shared/src/store/store.ts"],
+      "shared/store": ["../../shared/src/store/index.ts"],
       "shared/Button": ["../../shared/src/components/Button.tsx"],
       "shared/Header": ["../../shared/src/components/Header.tsx"],
       "shared/SharedApp": ["../../shared/src/App.tsx"],

@@ -14,7 +14,8 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './components': './src/components/index.ts',
-        './store': './src/store/store.ts',
+        './store': './src/store/index.ts',
+        './entity': './src/entity/index.ts',
         './SharedApp': './src/App.tsx',
       },
       shared: ['react', 'react-dom', 'react/jsx-runtime', 'zustand']
