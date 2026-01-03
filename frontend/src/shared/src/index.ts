@@ -1,7 +1,16 @@
-// Shared components
-export { default as Button } from './components/Button'
-export { default as Header } from './components/Header'
-export { useAppStore, useUserStore } from './store/store'
+/**
+ * Shared Module Export
+ * Centralized export for all shared resources
+ */
 
-// Types
-export type { Lesson } from './store/store'
+// Components
+export { Button, Header, LessonCard, LessonSection } from './components'
+
+// Store hooks
+export { useAppStore, useUserStore } from './store/store'
+export { useLessonStore } from './store/lessonStore'
+export { useCommonStore } from './store/commonStore'
+export { useThemeStore } from './store/themeStore'
+
+// Entity types
+export type { Lesson, User } from './entity'

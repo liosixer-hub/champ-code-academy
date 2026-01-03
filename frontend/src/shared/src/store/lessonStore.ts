@@ -1,16 +1,7 @@
 import { create } from 'zustand'
 import { useUserStore } from './userStore'
 import { useCommonStore } from './commonStore'
-
-export interface Lesson {
-  id: string
-  date: string
-  type: 'Historic' | 'Upcoming' | 'Available' | 'Today'
-  subject: string
-  students: string[]
-  tutor: string | null
-  status: string
-}
+import type { Lesson } from '../entity'
 
 interface LessonState {
   lessons: Lesson[]

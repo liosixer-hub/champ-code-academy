@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "shared/Button";
+import { Button } from "shared/components";
 import { useAppStore } from "shared/store";
 
 export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => void }) {

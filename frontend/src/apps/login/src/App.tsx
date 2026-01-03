@@ -13,7 +13,7 @@ function LoginApp({ onBackClick }: LoginAppProps) {
   return (
     <div className="h-screen flex">
       {/* Left Panel - Image Carousel */}
-      <div className="hidden lg:block lg:w-1/2 relative h-full" style={{ height: '100%', width: '50%' }}>
+      <div className="hidden lg:block lg:w-1/2 relative h-full" style={{ height: '100%', width: '100%' }}>
         <ImageCarousel />
       </div>
 

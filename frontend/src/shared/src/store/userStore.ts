@@ -1,9 +1,10 @@
 import { create } from 'zustand'
+import type { User } from '../entity'
 
 interface UserState {
-  user: { name: string; email: string } | null
+  user: User | null
   isAuthenticated: boolean
-  setUser: (user: { name: string; email: string }) => void
+  setUser: (user: User) => void
   logout: () => void
 }
 

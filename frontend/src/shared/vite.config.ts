@@ -13,8 +13,7 @@ export default defineConfig({
       name: 'shared',
       filename: 'remoteEntry.js',
       exposes: {
-        './Button': './src/components/Button.tsx',
-        './Header': './src/components/Header.tsx',
+        './components': './src/components/index.ts',
         './store': './src/store/store.ts',
         './SharedApp': './src/App.tsx',
       },

@@ -5,22 +5,8 @@
 // 请勿手动编辑
 
 // shared 应用暴露的模块
-declare module 'shared/Button' {
-  import type React from 'react';
-  interface ComponentProps extends React.HTMLAttributes<HTMLElement> {
-    children?: React.ReactNode;
-  }
-  const component: React.ComponentType<ComponentProps>;
-  export default component;
-}
-
-declare module 'shared/Header' {
-  import type React from 'react';
-  interface ComponentProps extends React.HTMLAttributes<HTMLElement> {
-    children?: React.ReactNode;
-  }
-  const component: React.ComponentType<ComponentProps>;
-  export default component;
+declare module 'shared/components' {
+  export * from './src/components/index.ts';
 }
 
 declare module 'shared/store' {

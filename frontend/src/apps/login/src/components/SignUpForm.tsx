@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "shared/Button";
+import { Button } from "shared/components";
 
 interface FormData {
   fullName: string;
