@@ -20,7 +20,6 @@ frontend/
 ├── src/
 │   ├── apps/          # 应用模块
 │   │   ├── dashboard/
-│   │   ├── home/
 │   │   ├── login/
 │   │   └── ...
 │   ├── host/          # 主应用
@@ -50,10 +49,9 @@ node scripts/build.js
 ```
 可用的模块：
 1. dashboard
-2. home
-3. login
-4. host
-5. shared
+2. login
+3. host
+4. shared
 输入模块名或编号来构建指定模块，输入 "all" 构建所有模块：
 请选择: shared
 ```
@@ -89,7 +87,7 @@ node scripts/build.js --help
 通过 `.env.production` 文件中的 `BUILD_MODULES` 变量可以控制默认构建的模块范围：
 
 ```env
-BUILD_MODULES=dashboard,home,shared
+BUILD_MODULES=dashboard,login,shared
 ```
 
 - 如果设置了此变量，脚本在构建所有模块时只会构建列出的模块

@@ -57,8 +57,7 @@ function getAppPort(appName) {
     'shared': 5001,
     'login': 5002,
     'host': 5000,
-    'dashboard': 5003,
-    'home': 5004
+    'dashboard': 5003
   };
   return portMap[appName] || 5000;
 }

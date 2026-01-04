@@ -50,7 +50,7 @@ function getPortsFromEnv() {
     return ports;
   } catch (error) {
     console.warn('无法读取 .env.dev 文件，使用默认端口');
-    return [5000, 5001, 5002, 5003, 5004];
+    return [5000, 5001, 5002, 5003];
   }
 }
 

@@ -16,7 +16,7 @@ pnpm preview
 
 **输入提示：**
 ```
-请输入要预览的应用 (all, host, shared, login, dashboard, home):
+请输入要预览的应用 (all, host, shared, login, dashboard):
 ```
 
 ### 预览所有应用
@@ -57,7 +57,6 @@ pnpm preview login dashboard
 | shared | 5001 |
 | login | 5002 |
 | dashboard | 5003 |
-| home | 5004 |
 
 ## 工作流程
 

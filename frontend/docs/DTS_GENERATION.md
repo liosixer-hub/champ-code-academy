@@ -134,6 +134,5 @@ federation({
 ✓ 扫描 shared: 找到 3 个暴露的模块
 ✓ 扫描 login: 找到 1 个暴露的模块
 ✓ 扫描 dashboard: 找到 1 个暴露的模块
-✓ 扫描 home: 找到 1 个暴露的模块
 ✅ 类型声明文件已生成: src/dts/global.d.ts
 ```

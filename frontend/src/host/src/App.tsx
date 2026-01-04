@@ -5,10 +5,8 @@ import { useThemeStore } from 'shared/store';
 // 懒加载远程模块
 const LoginApp = React.lazy(() => import('login/LoginApp'));
 const DashboardApp = React.lazy(() => import('dashboard/DashboardApp'));
-const HomeApp = React.lazy(() => import('home/HomeApp'));
 
 function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'login'>('login');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { theme, toggleTheme } = useThemeStore();
 
@@ -96,7 +94,7 @@ function App() {
     );
   }
 
-  // 未认证时，根据当前视图显示 home 或 login
+  // 未认证时显示 login
   return (
     <ThemeProvider theme={theme}>
       <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -109,11 +107,7 @@ function App() {
           {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
         </button>
         <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading Module...</div>}>
-          {currentView === 'home' ? (
-            <HomeApp onLoginClick={() => setCurrentView('login')} />
-          ) : (
-            <LoginApp onBackClick={() => setCurrentView('home')} />
-          )}
+          <LoginApp />
         </Suspense>
       </div>
     </ThemeProvider>

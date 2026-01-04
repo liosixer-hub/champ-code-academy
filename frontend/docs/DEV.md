@@ -11,7 +11,6 @@ frontend/
 ├── src/
 │   ├── apps/           # 子应用
 │   │   ├── dashboard/  # 仪表板应用
-│   │   ├── home/       # 首页应用
 │   │   ├── login/      # 登录应用
 │   │   └── shared/     # 共享模块
 │   ├── host/           # 主应用容器
@@ -63,7 +62,7 @@ pnpm dev shared       # 开发 shared 模块
 
 ```bash
 pnpm dev
-# 请输入要启动的应用 (all, host, shared, login, dashboard, home):
+# 请输入要启动的应用 (all, host, shared, login, dashboard):
 ```
 
 ## 端口配置
@@ -76,7 +75,6 @@ pnpm dev
 | shared | 5001 | 共享模块 |
 | login | 5002 | 登录应用 |
 | dashboard | 5003 | 仪表板应用 |
-| home | 5004 | 首页应用 |
 
 ## 开发工作流
 

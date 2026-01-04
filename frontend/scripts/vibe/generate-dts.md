@@ -167,12 +167,6 @@ exposes: {
 }
 ```
 
-**Home 应用：**
-```typescript
-exposes: {
-  './HomeApp': './src/App.tsx',
-}
-```
 
 **Login 应用：**
 ```typescript
@@ -203,16 +197,6 @@ import React from 'react';
 export declare const DashboardApp: React.ComponentType<{}>;
 ```
 
-```typescript
-// types/home/index.d.ts
-import React from 'react';
-
-export interface HomeAppProps {
-  onLoginClick?: () => void;
-}
-
-export declare const HomeApp: React.ComponentType<HomeAppProps>;
-```
 
 ```typescript
 // types/login/index.d.ts
@@ -244,7 +228,6 @@ import React from 'react';
 
 // Re-export app components
 export * from './dashboard';
-export * from './home';
 export * from './login';
 
 // Remote Module Federation declarations
@@ -255,14 +238,6 @@ declare module 'dashboard/DashboardApp' {
   export default DashboardApp;
 }
 
-declare module 'home/HomeApp' {
-  export interface HomeAppProps {
-    onLoginClick?: () => void;
-  }
-  
-  export const HomeApp: React.ComponentType<HomeAppProps>;
-  export default HomeApp;
-}
 
 declare module 'login/LoginApp' {
   export interface LoginAppProps {
@@ -286,7 +261,6 @@ import React from 'react';
 // 格式：{remote名称}/{exposes路径}
 const LoginApp = React.lazy(() => import('login/LoginApp'));
 const DashboardApp = React.lazy(() => import('dashboard/DashboardApp'));
-const HomeApp = React.lazy(() => import('home/HomeApp'));
 
 // TypeScript 现在可以正确推断这些组件的类型
 ```
@@ -304,8 +278,6 @@ frontend/src/types/
 │   ├── store/
 │   └── index.d.ts
 ├── dashboard/       # Dashboard 应用类型声明
-│   └── index.d.ts
-├── home/           # Home 应用类型声明
 │   └── index.d.ts
 ├── login/          # Login 应用类型声明
 │   └── index.d.ts
