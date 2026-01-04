@@ -12,7 +12,7 @@ log('Using login URL:', loginUrl);
 log('Using dashboard URL:', dashboardUrl);
 
 export default defineConfig({
-  base: '/',
+  base: process.env.BASE_PATH || '/',
   plugins: [
     react(),
     federation({

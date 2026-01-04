@@ -8,7 +8,7 @@ const loginUrl = process.env.BASE_URL_LOGIN || 'http://localhost:5002';
 const port = new URL(loginUrl).port;
 
 export default defineConfig({
-  base: '/',
+  base: process.env.BASE_PATH || '/',
   plugins: [
     react(),
     federation({

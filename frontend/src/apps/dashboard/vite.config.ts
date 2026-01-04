@@ -8,7 +8,7 @@ const dashboardUrl = process.env.BASE_URL_DASHBOARD || 'http://localhost:5003';
 const port = new URL(dashboardUrl).port;
 
 export default defineConfig({
-  base: '/',
+  base: process.env.BASE_PATH || '/',
   plugins: [
     react(),
     federation({

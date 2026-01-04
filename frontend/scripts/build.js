@@ -58,6 +58,9 @@ function findProjects(dir, projects = []) {
     const fullPath = path.join(dir, item);
     const stat = fs.statSync(fullPath);
     if (stat.isDirectory()) {
+      if (item === 'node_modules' || item === '.git' || item === 'dist' || item === 'build' || item === '.cache' || item === '.parcel-cache' || item === '.next' || item === '.nuxt' || item === 'tmp' || item === 'temp' || item === '.vscode') {
+        continue;
+      }
       const packageJsonPath = path.join(fullPath, 'package.json');
       if (fs.existsSync(packageJsonPath)) {
         projects.push(fullPath);
@@ -165,6 +168,8 @@ function processBuild(target) {
   console.log('将构建的项目：', projects.map(p => path.relative(srcDir, p)));
 
   // 逐一构建项目
+  const repoName = process.env.REPO_NAME || '';
+  const repoOwner = process.env.REPO_OWNER || '';
   projects.forEach(projectPath => {
     const projectName = path.basename(projectPath);
     console.log(`\n开始构建项目: ${projectName}`);
@@ -172,7 +177,25 @@ function processBuild(target) {
     try {
       // 进入项目目录并运行 pnpm build
       process.chdir(projectPath);
-      execSync('pnpm build', { stdio: 'inherit' });
+      const envOverride = { ...process.env };
+      if (repoName) {
+        let basePath;
+        if (projectName === 'host') {
+          basePath = `/${repoName}/`;
+          if (repoOwner) {
+            envOverride.BASE_URL_SHARED = `https://${repoOwner}.github.io/${repoName}/shared`;
+            envOverride.BASE_URL_LOGIN = `https://${repoOwner}.github.io/${repoName}/login`;
+            envOverride.BASE_URL_DASHBOARD = `https://${repoOwner}.github.io/${repoName}/dashboard`;
+          }
+        } else {
+          basePath = `/${repoName}/${projectName}/`;
+          if (repoOwner && (projectName === 'login' || projectName === 'dashboard')) {
+            envOverride.BASE_URL_SHARED = `https://${repoOwner}.github.io/${repoName}/shared`;
+          }
+        }
+        envOverride.BASE_PATH = basePath;
+      }
+      execSync('pnpm build', { stdio: 'inherit', env: envOverride });
 
       // 构建成功后，复制 dist 到 frontend/dist
       const projectDistSrc = path.join(projectPath, 'dist');
@@ -201,4 +224,8 @@ function processBuild(target) {
   });
 
   console.log('\n所有项目构建完成！');
+  const hostIndex = path.join(distDir, 'index.html');
+  if (fs.existsSync(hostIndex)) {
+    fs.copyFileSync(hostIndex, path.join(distDir, '404.html'));
+  }
 }

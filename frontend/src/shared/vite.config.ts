@@ -6,7 +6,7 @@ const sharedUrl = process.env.BASE_URL_SHARED || 'http://localhost:5001';
 const port = new URL(sharedUrl).port;
 
 export default defineConfig({
-  base: '/',
+  base: process.env.BASE_PATH || '/',
   plugins: [
     react(),
     federation({
