@@ -148,6 +148,8 @@ function processBuild(target) {
   // 加载生产环境变量
   const envProd = loadEnvProd();
   const buildModules = envProd.BUILD_MODULES ? envProd.BUILD_MODULES.split(',').map(m => m.trim()) : null;
+  let projects;
+
   if (target === 'all' || target === '') {
     if (buildModules) {
       // 根据 BUILD_MODULES 过滤项目
@@ -170,6 +172,8 @@ function processBuild(target) {
   // 逐一构建项目
   const repoName = process.env.REPO_NAME || '';
   const repoOwner = process.env.REPO_OWNER || '';
+  let hasError = false;
+
   projects.forEach(projectPath => {
     const projectName = path.basename(projectPath);
     console.log(`\n开始构建项目: ${projectName}`);
@@ -180,19 +184,17 @@ function processBuild(target) {
       const envOverride = { ...process.env };
       if (repoName) {
         let basePath;
-        const isRootSite = repoName.endsWith('.github.io');
-        const siteBase = isRootSite ? `https://${repoOwner}.github.io` : `https://${repoOwner}.github.io/${repoName}`;
         if (projectName === 'host') {
-          basePath = isRootSite ? '/' : `/${repoName}/`;
+          basePath = `/${repoName}/`;
           if (repoOwner) {
-            envOverride.BASE_URL_SHARED = `${siteBase}/shared`;
-            envOverride.BASE_URL_LOGIN = `${siteBase}/login`;
-            envOverride.BASE_URL_DASHBOARD = `${siteBase}/dashboard`;
+            envOverride.BASE_URL_SHARED = `https://${repoOwner}.github.io/${repoName}/shared`;
+            envOverride.BASE_URL_LOGIN = `https://${repoOwner}.github.io/${repoName}/login`;
+            envOverride.BASE_URL_DASHBOARD = `https://${repoOwner}.github.io/${repoName}/dashboard`;
           }
         } else {
-          basePath = isRootSite ? `/${projectName}/` : `/${repoName}/${projectName}/`;
+          basePath = `/${repoName}/${projectName}/`;
           if (repoOwner && (projectName === 'login' || projectName === 'dashboard')) {
-            envOverride.BASE_URL_SHARED = `${siteBase}/shared`;
+            envOverride.BASE_URL_SHARED = `https://${repoOwner}.github.io/${repoName}/shared`;
           }
         }
         envOverride.BASE_PATH = basePath;
@@ -218,14 +220,26 @@ function processBuild(target) {
         console.log(`项目 ${projectName} 构建完成，dist 已复制到 ${path.relative(path.join(__dirname, '..'), projectDistDest)}`);
       } else {
         console.warn(`警告: 项目 ${projectName} 没有生成 dist 目录`);
+        hasError = true;
       }
     } catch (error) {
       console.error(`构建项目 ${projectName} 失败:`, error.message);
-      // 继续下一个项目，而不是退出
+      hasError = true;
     }
   });
 
+  if (hasError) {
+    console.error('\n构建过程中发生错误，请检查日志。');
+    process.exit(1);
+  }
+
   console.log('\n所有项目构建完成！');
+  
+  // 创建 .nojekyll 文件以防止 GitHub Pages 忽略下划线开头的文件
+  const nojekyllPath = path.join(distDir, '.nojekyll');
+  fs.writeFileSync(nojekyllPath, '');
+  console.log('已创建 .nojekyll 文件');
+
   const hostIndex = path.join(distDir, 'index.html');
   if (fs.existsSync(hostIndex)) {
     fs.copyFileSync(hostIndex, path.join(distDir, '404.html'));
