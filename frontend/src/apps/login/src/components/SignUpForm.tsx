@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "shared/components";
+import { Button, MessageTool } from "shared/components";
 
 interface FormData {
   fullName: string;
@@ -21,6 +21,7 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
     password: "",
     confirmPassword: "",
   });
+  const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' | 'warning' } | null>(null);
 
   const updateFormData = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -40,9 +41,27 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setMessage(null);
+
     if (currentStep === steps.length) {
+      // Final submission validation
+      if (formData.password !== formData.confirmPassword) {
+        setMessage({ text: 'Passwords do not match. Please try again.', type: 'error' });
+        return;
+      }
+      if (formData.password.length < 8) {
+        setMessage({ text: 'Password must be at least 8 characters long.', type: 'error' });
+        return;
+      }
+      if (!/\d/.test(formData.password) || !/[a-zA-Z]/.test(formData.password)) {
+        setMessage({ text: 'Password must contain both letters and numbers.', type: 'error' });
+        return;
+      }
+
+      // Simulate registration API call
       console.log("Form submitted:", formData);
-      // Handle form submission
+      setMessage({ text: 'Account created successfully! Welcome to Champ Code Academy.', type: 'success' });
+      // Handle form submission - you would typically call an API here
     } else {
       handleNext();
     }
@@ -182,6 +201,14 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
           </Button>
         </div>
       </form>
+
+      {message && (
+        <MessageTool
+          message={message.text}
+          type={message.type}
+          onClose={() => setMessage(null)}
+        />
+      )}
 
       <p className="text-center text-sm text-gray-600 mt-6">
         Already have an account?{" "}

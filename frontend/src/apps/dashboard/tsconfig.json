@@ -7,7 +7,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["react", "react-dom"],
 
     /* Bundler mode */
     "moduleResolution": "node",
@@ -20,19 +19,18 @@
     "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": false,    
+    "noFallthroughCasesInSwitch": false, 
+    "declaration": true,
+    "declarationDir": "./dist",   
+    "emitDeclarationOnly": false, 
+    /* Type roots */
+    "typeRoots": ["../../types"],
     /* Path mapping */
     "paths": {
-      "@/*": ["./src/*"],
-      "shared/store": ["../../shared/src/store/index.ts"],
-      "shared/Button": ["../../shared/src/components/Button.tsx"],
-      "shared/Header": ["../../shared/src/components/Header.tsx"],
-      "shared/SharedApp": ["../../shared/src/App.tsx"],
-      "shared/*": ["../../shared/src/*"],
-      "login/*": ["./src/*"]
+      "@/*": ["./src/*"]
     },
     "baseUrl": "."
   },
-  "include": ["src"],
+  "include": ["src", "../../types/**/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

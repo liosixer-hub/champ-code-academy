@@ -201,13 +201,4 @@ function processBuild(target) {
   });
 
   console.log('\n所有项目构建完成！');
-
-  // 构建完成后自动生成类型声明文件
-  console.log('\n生成远程模块类型声明文件...');
-  process.chdir(path.join(__dirname, '..'));
-  try {
-    execSync('node scripts/generate-dts.js', { stdio: 'inherit' });
-  } catch (error) {
-    console.error('生成类型声明文件失败:', error.message);
-  }
 }

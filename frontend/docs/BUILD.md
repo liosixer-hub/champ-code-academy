@@ -105,7 +105,6 @@ BUILD_MODULES=dashboard,home,shared
    - 进入模块目录
    - 执行 `pnpm build` 命令
    - 复制构建产物到 `frontend/dist` 目录
-5. **类型生成**：执行 `generate-dts.js` 生成类型声明文件
 
 ## 构建产物
 
@@ -116,11 +115,6 @@ BUILD_MODULES=dashboard,home,shared
 
 ## 类型声明文件
 
-构建完成后，脚本会自动运行 `generate-dts.js` 来生成远程模块的 TypeScript 类型声明文件，这些文件位于：
-
-```
-frontend/src/dts/global.d.ts
-```
 
 ## 示例
 
@@ -188,7 +182,6 @@ node scripts/build.js
 ### 类型生成失败
 
 如果类型声明文件生成失败：
-- 检查 `generate-dts.js` 脚本是否存在
 - 确保所有模块的构建产物都正确生成
 - 查看具体的错误信息
 

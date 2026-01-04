@@ -7,7 +7,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["react", "react-dom"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -21,8 +20,13 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": false,
-    "baseUrl": ".",
-    "types": ["vite/client", "@types/react", "@types/react-dom"]
+    "typeRoots": ["../types"],
+    /* Path mapping */
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "baseUrl": "."
   },
-  "include": ["src", "../../dts/global.d.ts"],
+  "include": ["src/**/*", "../types/**/*.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

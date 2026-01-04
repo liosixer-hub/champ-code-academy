@@ -16,6 +16,7 @@ export default defineConfig({
         './components': './src/components/index.ts',
         './store': './src/store/index.ts',
         './entity': './src/entity/index.ts',
+        './providers': './src/providers/index.ts',
         './SharedApp': './src/App.tsx',
       },
       shared: ['react', 'react-dom', 'react/jsx-runtime', 'zustand']

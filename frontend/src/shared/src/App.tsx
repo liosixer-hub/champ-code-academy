@@ -1,25 +1,14 @@
 import Button from './components/Button';
 import Header from './components/Header';
-import ThemeProvider from './components/ThemeProvider';
+import { ThemeProvider } from './providers';
 import { useUserStore, useThemeStore } from './store';
-import { useEffect } from 'react';
 
 function SharedApp() {
   const { user, isAuthenticated, setUser, logout } = useUserStore();
   const { theme, toggleTheme } = useThemeStore();
 
-  // Initialize theme on mount
-  useEffect(() => {
-    const htmlElement = document.documentElement;
-    if (theme === 'dark') {
-      htmlElement.classList.add('dark');
-    } else {
-      htmlElement.classList.remove('dark');
-    }
-  }, [theme]);
-
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <div className="min-h-screen bg-white dark:bg-slate-950 text-gray-900 dark:text-white transition-colors">
         <Header />
         <button

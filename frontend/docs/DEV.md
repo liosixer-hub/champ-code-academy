@@ -193,10 +193,6 @@ pnpm run kill-ports
 **问题**: 模块联邦导入出现类型错误
 
 **解决方案**:
-```bash
-# 重新生成类型声明
-pnpm run generate-dts
-```
 
 ## 调试技巧
 

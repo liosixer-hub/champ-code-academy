@@ -47,14 +47,6 @@ function LoginApp({ onBackClick }: LoginAppProps) {
       {/* Left Panel - Image Carousel */}
       <div className="hidden lg:block lg:w-1/2 relative h-full" style={{ height: '100%', width: '100%' }}>
         <ImageCarousel />
-        {/* Theme Toggle Button */}
-        <button
-          onClick={toggleTheme}
-          className="absolute top-4 right-4 px-3 py-2 rounded-md text-sm font-medium bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors z-10"
-          aria-label="Toggle theme"
-        >
-          {theme === 'light' ? '🌙' : '☀️'}
-        </button>
       </div>
 
       {/* Right Panel - Login/Sign Up Form */}

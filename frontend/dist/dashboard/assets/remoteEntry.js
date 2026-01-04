@@ -2,8 +2,8 @@ const currentImports = {};
       const exportSet = new Set(['Module', '__esModule', 'default', '_export_sfc']);
       let moduleMap = {
 "./DashboardApp":()=>{
-      dynamicLoadingCss(["style-_VyGLcHB.css"], false, './DashboardApp');
-      return __federation_import('./__federation_expose_DashboardApp-Br2cKyyC.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
+      dynamicLoadingCss(["style-CJbGD0eb.css"], false, './DashboardApp');
+      return __federation_import('./__federation_expose_DashboardApp-CJI6cW0E.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
       const seen = {};
       const dynamicLoadingCss = (cssFilePaths, dontAppendStylesToHead, exposeItemName) => {
         const metaUrl = import.meta.url;

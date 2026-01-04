@@ -14,22 +14,8 @@ pnpm build
 # 自动执行生成 DTS 并输出到 src/dts/global.d.ts
 ```
 
-### 手动生成
-也可以单独运行类型声明生成脚本：
-
-```bash
-pnpm run generate-dts
-# 或
-npm run generate-dts
-```
-
 ## 脚本文件
 
-- **[scripts/generate-dts.js](scripts/generate-dts.js)** - 核心生成脚本
-  - 扫描所有应用的 vite 配置
-  - 提取 `exposes` 中定义的模块
-  - 根据文件类型生成对应的类型声明
-  - 输出到 `src/dts/global.d.ts`
 
 ## 生成的类型声明
 
@@ -140,9 +126,6 @@ federation({
 
 ### 类型声明没有更新
 
-1. 确保 vite 配置文件路径正确
-2. 检查 `exposes` 配置是否有效
-3. 手动运行 `pnpm run generate-dts` 进行调试
 
 ### 查看脚本输出
 

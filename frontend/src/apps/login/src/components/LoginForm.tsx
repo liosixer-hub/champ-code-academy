@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { Button } from "shared/components";
+import { Button, MessageTool } from "shared/components";
 import { useUserStore } from "shared/store";
 
 export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => void }) {
   const [email, setEmail] = useState("user@example.com");
   const [password, setPassword] = useState("password");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' | 'warning' } | null>(null);
   const setUser = useUserStore((state) => state.setUser);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setMessage(null);
     setLoading(true);
     try {
       const response = await fetch('http://localhost:8000/login', {
@@ -24,12 +24,13 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
       if (response.ok) {
         const user = await response.json();
         setUser(user);
+        setMessage({ text: 'Login successful! Welcome back.', type: 'success' });
       } else {
-        setError('Invalid credentials');
+        setMessage({ text: 'Invalid credentials. Please check your email and password.', type: 'error' });
       }
     } catch (error) {
       console.error('Login error:', error);
-      setError('Login failed');
+      setMessage({ text: 'Login failed. Please try again later.', type: 'error' });
     } finally {
       setLoading(false);
     }
@@ -87,8 +88,6 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
           </a>
         </div>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-
         <Button
           type="submit"
           className="w-full mt-8"
@@ -97,6 +96,14 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
           {loading ? 'Signing in...' : 'Sign In'}
         </Button>
       </form>
+
+      {message && (
+        <MessageTool
+          message={message.text}
+          type={message.type}
+          onClose={() => setMessage(null)}
+        />
+      )}
 
       <p className="text-center text-sm text-gray-600 mt-6">
         Don't have an account?{" "}

@@ -16,6 +16,7 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './HomeApp': './src/App.tsx',
+        './index': './src/index.ts',
       },
       remotes: {
         shared: sharedUrl + '/assets/remoteEntry.js',

@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
-import { useThemeStore } from '../store'
 
 interface ThemeProviderProps {
   children: React.ReactNode
+  theme: 'light' | 'dark'
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const { theme } = useThemeStore()
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
 
   useEffect(() => {
     const htmlElement = document.documentElement
@@ -19,5 +18,3 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   return <>{children}</>
 }
-
-export default ThemeProvider
