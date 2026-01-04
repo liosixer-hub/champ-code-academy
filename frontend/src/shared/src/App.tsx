@@ -9,11 +9,11 @@ function SharedApp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="min-h-screen bg-white dark:bg-slate-950 text-gray-900 dark:text-white transition-colors">
+      <div className="min-h-screen bg-background text-foreground transition-colors">
         <Header />
         <button
           onClick={toggleTheme}
-          className="fixed bottom-4 right-4 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors shadow-lg z-50"
+          className="fixed bottom-4 right-4 px-4 py-2 rounded-lg bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground transition-colors shadow-lg z-50"
           aria-label="Toggle theme"
           title="Toggle theme"
         >
@@ -21,11 +21,11 @@ function SharedApp() {
         </button>
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <h2 className="text-2xl font-bold mb-4">Shared Components Demo</h2>
+            <h2 className="text-2xl font-bold mb-4 text-foreground">Shared Components Demo</h2>
 
-            <div className="bg-gray-50 dark:bg-slate-900 overflow-hidden shadow rounded-lg mb-6 transition-colors">
+            <div className="bg-card text-card-foreground overflow-hidden shadow rounded-lg mb-6 transition-colors">
               <div className="px-4 py-5 sm:p-6">
-                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4">
+                <h3 className="text-lg leading-6 font-medium text-foreground mb-4">
                   Button Component
                 </h3>
                 <Button onClick={() => alert('Button clicked!')}>
@@ -34,18 +34,18 @@ function SharedApp() {
               </div>
             </div>
 
-            <div className="bg-gray-50 dark:bg-slate-900 overflow-hidden shadow rounded-lg mb-6 transition-colors">
+            <div className="bg-card text-card-foreground overflow-hidden shadow rounded-lg mb-6 transition-colors">
               <div className="px-4 py-5 sm:p-6">
-                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4">
+                <h3 className="text-lg leading-6 font-medium text-foreground mb-4">
                   Store Demo
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   Authentication Status: {isAuthenticated ? 'Logged In' : 'Not Logged In'}
                 </p>
                 {user && (
                   <div className="mb-4">
-                    <p className="text-sm text-gray-900 dark:text-gray-200">Name: {user.name}</p>
-                    <p className="text-sm text-gray-900 dark:text-gray-200">Email: {user.email}</p>
+                    <p className="text-sm text-foreground">Name: {user.name}</p>
+                    <p className="text-sm text-foreground">Email: {user.email}</p>
                   </div>
                 )}
                 <div className="space-x-2">

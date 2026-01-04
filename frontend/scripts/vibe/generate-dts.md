@@ -154,31 +154,47 @@ export declare const SharedApp: React.ComponentType<{}>;
 
 ### 模块联邦远程模块声明
 
-当使用模块联邦时，host 应用需要通过远程路径导入其他应用的组件（如 `login/LoginApp`）。需要为这些远程导入路径创建类型声明。
+当使用模块联邦时，host 应用需要通过远程路径导入其他应用的组件。需要根据 `vite.config.ts` 中的 `exposes` 配置为这些远程导入路径创建类型声明。
 
-#### 源代码示例
+#### 分析 vite.config.ts 的 exposes 配置
+
+首先查看每个应用的 `vite.config.ts` 中的 `exposes` 配置：
+
+**Dashboard 应用：**
 ```typescript
-// apps/dashboard/src/App.tsx
-export const DashboardApp: React.FC = () => { ... }
-export default DashboardApp;
-
-// apps/home/src/App.tsx
-interface HomeAppProps {
-  onLoginClick?: () => void;
+exposes: {
+  './DashboardApp': './src/App.tsx',
 }
-function HomeApp({ onLoginClick }: HomeAppProps) { ... }
-export default HomeApp;
+```
 
-// apps/login/src/App.tsx
-interface LoginAppProps {
-  onBackClick?: () => void;
+**Home 应用：**
+```typescript
+exposes: {
+  './HomeApp': './src/App.tsx',
 }
-function LoginApp({ onBackClick }: LoginAppProps) { ... }
-export default LoginApp;
+```
+
+**Login 应用：**
+```typescript
+exposes: {
+  './LoginApp': './src/App.tsx',
+}
+```
+
+**Shared 模块：**
+```typescript
+exposes: {
+  './components': './src/components/index.ts',
+  './store': './src/store/index.ts',
+  './entity': './src/entity/index.ts',
+  './providers': './src/providers/index.ts',
+  './SharedApp': './src/App.tsx',
+}
 ```
 
 #### 应用组件声明文件
-首先为每个应用创建组件声明文件，放在与 `shared` 同级的目录下：
+
+为每个应用创建组件声明文件，放在与 `shared` 同级的目录下：
 
 ```typescript
 // types/dashboard/index.d.ts
@@ -210,7 +226,8 @@ export declare const LoginApp: React.ComponentType<LoginAppProps>;
 ```
 
 #### 模块联邦远程路径声明文件
-创建 `apps.d.ts` 文件，将模块联邦的导入路径映射到实际组件类型：
+
+创建 `apps.d.ts` 文件，将模块联邦的导入路径映射到实际组件类型。**路径必须与 `vite.config.ts` 中的 `exposes` 配置完全一致**：
 
 ```typescript
 // types/apps.d.ts
@@ -218,7 +235,7 @@ export declare const LoginApp: React.ComponentType<LoginAppProps>;
  * Apps Module Federation Type Declarations
  * Declares types for remote modules loaded via Module Federation
  * 
- * These declarations map the module federation import paths (e.g., 'login/LoginApp')
+ * These declarations map the module federation import paths (e.g., 'dashboard/DashboardApp')
  * to the actual component types defined in the apps.
  * This enables type checking for module federation imports in host applications.
  */
@@ -231,14 +248,7 @@ export * from './home';
 export * from './login';
 
 // Remote Module Federation declarations
-declare module 'login/LoginApp' {
-  export interface LoginAppProps {
-    onBackClick?: () => void;
-  }
-  
-  export const LoginApp: React.ComponentType<LoginAppProps>;
-  export default LoginApp;
-}
+// 注意：路径必须与 vite.config.ts 中的 exposes 配置完全匹配
 
 declare module 'dashboard/DashboardApp' {
   export const DashboardApp: React.ComponentType<{}>;
@@ -253,16 +263,27 @@ declare module 'home/HomeApp' {
   export const HomeApp: React.ComponentType<HomeAppProps>;
   export default HomeApp;
 }
+
+declare module 'login/LoginApp' {
+  export interface LoginAppProps {
+    onBackClick?: () => void;
+  }
+  
+  export const LoginApp: React.ComponentType<LoginAppProps>;
+  export default LoginApp;
+}
 ```
 
 #### 使用示例
-在 host 应用中，可以这样使用：
+
+在 host 应用中，使用 `vite.config.ts` 中 `remotes` 配置的远程名称和 `exposes` 的路径：
 
 ```typescript
 // host/src/App.tsx
 import React from 'react';
 
 // 这些导入路径由模块联邦在运行时解析
+// 格式：{remote名称}/{exposes路径}
 const LoginApp = React.lazy(() => import('login/LoginApp'));
 const DashboardApp = React.lazy(() => import('dashboard/DashboardApp'));
 const HomeApp = React.lazy(() => import('home/HomeApp'));
@@ -271,6 +292,7 @@ const HomeApp = React.lazy(() => import('home/HomeApp'));
 ```
 
 #### 目录结构
+
 应用的类型声明文件应该放在与 `shared` 同级的目录下：
 
 ```
@@ -291,22 +313,29 @@ frontend/src/types/
 └── global.d.ts
 ```
 
-#### 步骤
-1. 为每个应用创建组件声明文件（`types/{appName}/index.d.ts`），与 `shared` 目录同级
-2. 创建 `types/apps.d.ts` 文件，使用 `declare module` 声明模块联邦导入路径
-3. 在 `apps.d.ts` 中重新导出所有应用组件：`export * from './dashboard'` 等
-4. 确保 host 应用的 `tsconfig.json` 包含类型声明目录：
-   ```json
-   {
-     "compilerOptions": {
-       "typeRoots": ["../types"]
-     },
-     "include": ["src/**/*", "../types/**/*.d.ts"]
-   }
-   ```
+#### 生成步骤
+
+1. **查看 vite.config.ts 的 exposes 配置**
+   - 确定每个应用暴露的模块路径
+   - 例如：`'./DashboardApp': './src/App.tsx'` 对应导入路径 `dashboard/DashboardApp`
+
+2. **为每个应用创建组件声明文件**
+   - 创建 `types/{appName}/index.d.ts`
+   - 根据源代码中的组件定义和 Props 接口生成声明
+
+3. **创建模块联邦声明文件**
+   - 在 `types/apps.d.ts` 中使用 `declare module` 声明每个 exposes 路径
+   - **确保路径格式为 `{remote名称}/{exposes路径}`，与 vite.config.ts 完全一致**
+
+4. **验证配置**
+   - 确保 host 应用的 `tsconfig.json` 包含类型声明目录
+   - 确保所有导入路径与 `vite.config.ts` 中的配置匹配
 
 #### 注意事项
-- 模块联邦的导入路径（如 `login/LoginApp`）必须与 `vite.config.ts` 中的 `remotes` 配置一致
+
+- **模块联邦的导入路径格式**：`{remote名称}/{exposes路径}`
+  - `remote名称` 来自 host 的 `vite.config.ts` 中的 `remotes` 配置
+  - `exposes路径` 来自各应用的 `vite.config.ts` 中的 `exposes` 配置（去掉 `./` 前缀）
 - `declare module` 中的路径必须与实际的导入路径完全匹配
 - 接口定义必须在 `declare module` 内部使用 `export` 关键字
 - 应用类型声明文件与 `shared` 目录同级，保持目录结构的一致性

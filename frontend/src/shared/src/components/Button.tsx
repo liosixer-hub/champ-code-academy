@@ -8,12 +8,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({ children, onClick, className = '', variant = 'primary', ...props }: ButtonProps) {
-  const baseClasses = 'transition-colors'
+  const baseClasses = 'transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50'
 
   const variantClasses = {
-    primary: 'py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700',
-    secondary: 'py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50',
-    link: 'text-blue-600 hover:underline'
+    primary: 'py-2 px-4 bg-primary text-primary-foreground shadow hover:bg-primary/90 rounded-lg',
+    secondary: 'py-2 px-4 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground rounded-lg',
+    link: 'text-primary underline-offset-4 hover:underline'
   }
 
   return (

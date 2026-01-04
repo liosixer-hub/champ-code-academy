@@ -1,16 +1,21 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import { ThemeProvider } from 'shared/providers';
-import { useThemeStore } from 'shared/store';
 
 // 懒加载远程模块
-const LoginApp = React.lazy(() => import('login/index'));
-const DashboardApp = React.lazy(() => import('dashboard/index'));
-const HomeApp = React.lazy(() => import('home/index'));
+const LoginApp = React.lazy(() => import('login/LoginApp'));
+const DashboardApp = React.lazy(() => import('dashboard/DashboardApp'));
+const HomeApp = React.lazy(() => import('home/HomeApp'));
 
 function App() {
   const [currentView, setCurrentView] = useState<'home' | 'login'>('login');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { theme } = useThemeStore();
+
+  // 强制设置为 light 主题
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    htmlElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+  }, []);
 
   // 监听认证状态和localStorage变化
   useEffect(() => {
@@ -78,8 +83,8 @@ function App() {
   // 如果已认证，显示 dashboard
   if (isAuthenticated) {
     return (
-      <ThemeProvider theme={theme}>
-        <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors relative">
+      <ThemeProvider theme="light">
+        <div className="min-h-screen bg-white transition-colors relative">
           <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading Module...</div>}>
             <DashboardApp />
           </Suspense>
@@ -90,8 +95,8 @@ function App() {
 
   // 未认证时，根据当前视图显示 home 或 login
   return (
-    <ThemeProvider theme={theme}>
-      <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors">
+    <ThemeProvider theme="light">
+      <div className="min-h-screen bg-white transition-colors">
         <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading Module...</div>}>
           {currentView === 'home' ? (
             <HomeApp onLoginClick={() => setCurrentView('login')} />

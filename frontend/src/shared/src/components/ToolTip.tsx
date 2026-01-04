@@ -37,7 +37,7 @@ export const ToolTip: React.FC<ToolTipProps> = ({
       {children}
       {isVisible && (
         <div
-          className={`absolute z-50 px-2 py-1 text-sm text-white bg-gray-800 rounded shadow-lg whitespace-nowrap ${getPositionStyles()}`}
+          className={`absolute z-50 px-2 py-1 text-sm text-primary-foreground bg-primary rounded shadow-lg whitespace-nowrap ${getPositionStyles()}`}
         >
           {content}
         </div>

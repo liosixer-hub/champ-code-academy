@@ -25,14 +25,14 @@ export const MessageTool: React.FC<MessageToolProps> = ({
   const getTypeStyles = () => {
     switch (type) {
       case 'success':
-        return 'bg-green-500 text-white';
+        return 'bg-primary text-primary-foreground';
       case 'error':
-        return 'bg-red-500 text-white';
+        return 'bg-destructive text-destructive-foreground';
       case 'warning':
-        return 'bg-yellow-500 text-black';
+        return 'bg-accent text-accent-foreground';
       case 'info':
       default:
-        return 'bg-blue-500 text-white';
+        return 'bg-secondary text-secondary-foreground';
     }
   };
 

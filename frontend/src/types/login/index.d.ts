@@ -10,3 +10,5 @@ export interface LoginAppProps {
 
 export declare const LoginApp: React.ComponentType<LoginAppProps>;
 
+// Components
+export * from './components';
