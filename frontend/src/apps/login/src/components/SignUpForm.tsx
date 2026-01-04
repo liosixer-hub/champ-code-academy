@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, MessageTool } from "shared/components";
+import { Button, MessageBox } from "shared/components";
 
 interface FormData {
   fullName: string;
@@ -72,8 +72,8 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
   return (
     <div className="w-full max-w-md mx-auto px-8">
       <div className="mb-10">
-        <h1 className="text-3xl mb-2">Tutor Registration</h1>
-        <p className="text-gray-600">Join Champ Code Academy</p>
+        <h1 className="text-3xl mb-2 text-foreground">Tutor Registration</h1>
+        <p className="text-muted-foreground">Join Champ Code Academy</p>
       </div>
 
       {/* Progress Indicator */}
@@ -87,23 +87,23 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-colors ${
                   step.id <= currentStep
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-200 text-gray-500"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground"
                 }`}
               >
                 {step.id}
               </div>
               <span className={`text-xs text-center ${
-                step.id <= currentStep ? "text-blue-600" : "text-gray-500"
+                step.id <= currentStep ? "text-primary" : "text-muted-foreground"
               }`}>
                 {step.title}
               </span>
             </div>
           ))}
         </div>
-        <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+        <div className="w-full bg-muted h-2 rounded-full overflow-hidden">
           <div
-            className="bg-blue-600 h-full transition-all duration-500 ease-out"
+            className="bg-primary h-full transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -203,7 +203,7 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
       </form>
 
       {message && (
-        <MessageTool
+        <MessageBox
           message={message.text}
           type={message.type}
           onClose={() => setMessage(null)}

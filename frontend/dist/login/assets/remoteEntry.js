@@ -2,8 +2,8 @@ const currentImports = {};
       const exportSet = new Set(['Module', '__esModule', 'default', '_export_sfc']);
       let moduleMap = {
 "./LoginApp":()=>{
-      dynamicLoadingCss(["style-CakCQgZY.css"], false, './LoginApp');
-      return __federation_import('./__federation_expose_LoginApp-DCRTzL4o.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
+      dynamicLoadingCss(["style-PHdjPwLI.css"], false, './LoginApp');
+      return __federation_import('./__federation_expose_LoginApp-BmlsZY3Y.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
       const seen = {};
       const dynamicLoadingCss = (cssFilePaths, dontAppendStylesToHead, exposeItemName) => {
         const metaUrl = import.meta.url;
