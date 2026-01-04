@@ -30,11 +30,16 @@ export declare const LessonSection: React.ComponentType<{
 }>;
 
 // MessageTool component
-export declare const MessageTool: React.ComponentType<{
+export declare const MessageBox: React.ComponentType<{
   message: string;
   type: 'success' | 'error' | 'info' | 'warning';
   duration?: number;
   onClose?: () => void;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  confirmText?: string;
+  cancelText?: string;
+  persistent?: boolean;
 }>;
 
 // ToolTip component
@@ -51,4 +56,12 @@ export declare const DatePicker: React.ComponentType<{
   onStartDateChange: (date: string) => void;
   onEndDateChange: (date: string) => void;
   className?: string;
+}>;
+
+// Toast component
+export declare const Toast: React.ComponentType<{
+  message: string;
+  type: 'success' | 'error' | 'info';
+  onClose: () => void;
+  duration?: number;
 }>;

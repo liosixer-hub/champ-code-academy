@@ -10,22 +10,18 @@ interface LoginAppProps {
 function LoginApp({ onBackClick }: LoginAppProps) {
   const [isLogin, setIsLogin] = useState(true);
 
-  useEffect(() => {
-    // 强制设置为 light 主题
-    const htmlElement = document.documentElement;
-    htmlElement.classList.remove('dark');
-    localStorage.setItem('theme', 'light');
-  }, []);
+  useEffect(() => {}, []);
 
   return (
-    <div className="h-screen flex bg-white transition-colors">
-      {/* Left Panel - Image Carousel */}
-      <div className="hidden lg:block lg:w-1/2 relative h-full" style={{ height: '100%', width: '100%' }}>
+    <div className="h-screen flex bg-background text-foreground transition-colors">
+      <div
+        className="hidden lg:block lg:w-1/2 relative h-full lg:border-r border-border"
+        style={{ height: '100%', width: '100%' }}
+      >
         <ImageCarousel />
       </div>
 
-      {/* Right Panel - Login/Sign Up Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white overflow-y-auto h-full transition-colors relative">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-10 bg-card text-card-foreground overflow-y-auto h-full transition-colors relative">
         {isLogin ? (
           <LoginForm onSwitchToRegister={() => setIsLogin(false)} />
         ) : (

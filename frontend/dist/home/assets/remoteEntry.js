@@ -2,11 +2,8 @@ const currentImports = {};
       const exportSet = new Set(['Module', '__esModule', 'default', '_export_sfc']);
       let moduleMap = {
 "./HomeApp":()=>{
-      dynamicLoadingCss(["style-FrrfCbs1.css"], false, './HomeApp');
-      return __federation_import('./__federation_expose_HomeApp-C7sueNRW.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},
-"./index":()=>{
-      dynamicLoadingCss(["style-FrrfCbs1.css"], false, './index');
-      return __federation_import('${__federation_expose_./index}').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
+      dynamicLoadingCss(["style-DTeRevuk.css"], false, './HomeApp');
+      return __federation_import('./__federation_expose_HomeApp-DvW4MF78.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
       const seen = {};
       const dynamicLoadingCss = (cssFilePaths, dontAppendStylesToHead, exposeItemName) => {
         const metaUrl = import.meta.url;

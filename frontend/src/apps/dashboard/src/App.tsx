@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { LessonSection, DatePicker, Toast } from 'shared/components';
+import { LessonSection, DatePicker, Toast, MessageBox } from 'shared/components';
 import { useUserStore } from 'shared/store';
 import { Lesson } from 'shared/entity';
+import { Layout } from 'shared/layout';
 
 interface ToastMessage {
   id: number;
@@ -16,6 +17,7 @@ export const DashboardApp: React.FC = () => {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const toastIdRef = useRef(0);
   const lastDataHashRef = useRef<string>('');
+  const [logoutConfirmVisible, setLogoutConfirmVisible] = useState(false);
 
   // Date filtering state
   const [startDate, setStartDate] = useState<string>('');
@@ -24,16 +26,18 @@ export const DashboardApp: React.FC = () => {
   // User logout
   const logout = useUserStore((state) => state.logout);
   const handleLogout = () => {
+    setLogoutConfirmVisible(true);
+  };
+  const confirmLogout = () => {
+    setLogoutConfirmVisible(false);
     logout();
     window.location.reload();
   };
+  const cancelLogout = () => {
+    setLogoutConfirmVisible(false);
+  };
 
-  useEffect(() => {
-    // 强制设置为 light 主题
-    const htmlElement = document.documentElement;
-    htmlElement.classList.remove('dark');
-    localStorage.setItem('theme', 'light');
-  }, []);
+  useEffect(() => {}, []);
 
   const showToast = (message: string, type: 'success' | 'error' | 'info') => {
     const id = toastIdRef.current++;
@@ -110,7 +114,8 @@ export const DashboardApp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 transition-colors py-6 md:py-10 px-4 md:px-6 relative">
+    <Layout>
+      <main className="py-6 md:py-10 px-4 md:px-6 relative">
       {/* Toast Notifications */}
       {toasts.map((toast) => (
         <Toast
@@ -120,11 +125,24 @@ export const DashboardApp: React.FC = () => {
           onClose={() => removeToast(toast.id)}
         />
       ))}
+      {logoutConfirmVisible && (
+        <MessageBox
+          message="确定要退出吗？"
+          type="warning"
+          duration={0}
+          persistent
+          onConfirm={confirmLogout}
+          onCancel={cancelLogout}
+          confirmText="退出"
+          cancelText="取消"
+          onClose={cancelLogout}
+        />
+      )}
       <div className="absolute top-4 right-4 flex gap-2">
         
         <button
           onClick={handleLogout}
-          className="px-3 py-2 rounded-md text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition-colors"
+          className="px-3 py-2 rounded-md text-sm font-medium bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors"
           aria-label="Logout"
         >
           Logout
@@ -133,50 +151,59 @@ export const DashboardApp: React.FC = () => {
 
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
-          <p className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Tutor</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">Tutor Dashboard</h1>
-          <p className="text-lg text-gray-600">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
+          {(() => {
+            const user = useUserStore.getState().user;
+            const name = user?.name || 'Tutor';
+            return (
+              <p className="text-sm font-medium text-muted-foreground tracking-wide mb-2">
+                Welcome back {name}
+              </p>
+            );
+          })()}
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2">Tutor Dashboard</h1>
+          <p className="text-lg text-muted-foreground">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
         </div>
 
         {/* Loading State */}
         {loading && (
-          <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
-            <p className="text-blue-600">Loading lessons...</p>
+          <div className="mb-8 p-6 bg-secondary rounded-lg border border-input">
+            <p className="text-secondary-foreground">Loading lessons...</p>
           </div>
         )}
 
         {/* Error State */}
         {error && (
-          <div className="mb-8 p-6 bg-red-50 rounded-lg border border-red-200">
-            <p className="text-red-600">Error: {error}</p>
+          <div className="mb-8 p-6 bg-destructive rounded-lg border border-input">
+            <p className="text-destructive-foreground">Error: {error}</p>
             <button
               onClick={() => {
                 setError(null);
                 fetchLessons();
               }}
-              className="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+              className="mt-2 px-4 py-2 bg-destructive text-destructive-foreground rounded hover:bg-destructive/90 transition-colors"
             >
               Retry
             </button>
           </div>
         )}
 
-        <div className="mb-8 p-6 bg-gray-100 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold mb-4 text-gray-900">Filter Lessons by Date Range</h3>
+        <div className="mb-8 p-6 bg-card rounded-lg border border-border">
+          <h3 className="text-lg font-semibold mb-4 text-foreground">Filter Lessons by Date Range</h3>
           
           <DatePicker
             startDate={startDate}
             endDate={endDate}
             onStartDateChange={setStartDate}
             onEndDateChange={setEndDate}
+            className="mt-4 md:mt-5 gap-6 p-5 md:p-6 rounded-md border border-input"
           />
 
-          <p className="text-sm text-gray-600 mt-4">Total {filteredLessons.length} lessons</p>
+          <p className="text-sm text-muted-foreground mt-4">Total {filteredLessons.length} lessons</p>
         </div>
 
         {filteredLessons.length > 0 ? (
           Object.entries(groupLessonsByMonth(filteredLessons))
-            .sort()
+            .sort(([a], [b]) => b.localeCompare(a))
             .map(([monthKey, monthLessons]) => {
               const [year, month] = monthKey.split('-');
               const monthName = new Date(`${year}-${month}-01`).toLocaleDateString('en-US', {
@@ -186,52 +213,54 @@ export const DashboardApp: React.FC = () => {
 
               return (
                 <div key={monthKey} className="mb-12">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">{monthName}</h2>
+                  <h2 className="text-2xl font-bold text-foreground mb-6">{monthName}</h2>
 
                   {(() => {
-                    const historic = monthLessons.filter((l) => l.type === 'Historic');
-                    const upcoming = monthLessons.filter((l) => l.type === 'Upcoming');
-                    const available = monthLessons.filter((l) => l.type === 'Available');
-                    const today = monthLessons.filter((l) => l.type === 'Today');
+                    const monthLessonsSorted = [...monthLessons].sort(
+                      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+                    );
+                    const historic = monthLessonsSorted.filter((l) => l.type === 'Historic');
+                    const upcoming = monthLessonsSorted.filter((l) => l.type === 'Upcoming');
+                    const available = monthLessonsSorted.filter((l) => l.type === 'Available');
+                    const today = monthLessonsSorted.filter((l) => l.type === 'Today');
 
                     return (
                       <>
-                        {historic.length > 0 && (
-                          <LessonSection title="Completed Lessons" lessons={historic} />
-                        )}
-                        {upcoming.length > 0 && (
-                          <LessonSection title="Upcoming Lessons" lessons={upcoming} />
-                        )}
                         {available.length > 0 && (
                           <LessonSection
-                            title="Available Lessons"
-                            lessons={available}
-                            onTake={async (lessonId) => {
-                              try {
-                                setLoading(true);
-                                const response = await fetch(`http://localhost:8000/api/lessons/${lessonId}/take`, {
-                                  method: 'POST',
-                                  headers: { 'Content-Type': 'application/json' },
-                                });
-                                if (!response.ok) {
-                                  const errorData = await response.json().catch(() => ({ detail: 'Failed to take lesson' }));
-                                  throw new Error(errorData.detail || 'Failed to take lesson');
-                                }
-                                // 刷新课程列表
-                                await fetchLessons(false);
-                                showToast('Lesson taken successfully!', 'success');
-                              } catch (err) {
-                                const errorMessage = err instanceof Error ? err.message : 'Failed to take lesson';
-                                setError(errorMessage);
-                                showToast(errorMessage, 'error');
-                              } finally {
-                                setLoading(false);
+                          title="Available Lessons"
+                          lessons={available}
+                          onTake={async (lessonId) => {
+                            try {
+                              setLoading(true);
+                              const response = await fetch(`http://localhost:8000/api/lessons/${lessonId}/take`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                              });
+                              if (!response.ok) {
+                                const errorData = await response.json().catch(() => ({ detail: 'Failed to take lesson' }));
+                                throw new Error(errorData.detail || 'Failed to take lesson');
                               }
-                            }}
+                              await fetchLessons(false);
+                              showToast('Lesson taken successfully!', 'success');
+                            } catch (err) {
+                              const errorMessage = err instanceof Error ? err.message : 'Failed to take lesson';
+                              setError(errorMessage);
+                              showToast(errorMessage, 'error');
+                            } finally {
+                              setLoading(false);
+                            }
+                          }}
                           />
                         )}
                         {today.length > 0 && (
                           <LessonSection title="Today's Lessons" lessons={today} />
+                        )}
+                        {upcoming.length > 0 && (
+                          <LessonSection title="Upcoming Lessons" lessons={upcoming} />
+                        )}
+                        {historic.length > 0 && (
+                          <LessonSection title="Completed Lessons" lessons={historic} />
                         )}
                       </>
                     );
@@ -241,11 +270,12 @@ export const DashboardApp: React.FC = () => {
             })
         ) : !loading && !error ? (
           <div className="text-center py-12">
-            <p className="text-xl text-gray-600">No lessons found in the selected time range</p>
+            <p className="text-xl text-muted-foreground">No lessons found in the selected time range</p>
           </div>
         ) : null}
       </div>
-    </div>
+      </main>
+    </Layout>
   );
 };
 

@@ -1,56 +1,7 @@
+@import './theme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  color-scheme: light;
-}
-
-html.dark {
-  color-scheme: dark;
-}
-
-@layer base {
-  html {
-    --background: 0 0% 100%;
-    --foreground: 210 100% 20%;
-    --card: 60 100% 90%;
-    --card-foreground: 210 100% 20%;
-    --primary: 200 60% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 180 100% 90%;
-    --secondary-foreground: 210 50% 40%;
-    --muted: 0 0% 80%;
-    --muted-foreground: 210 30% 40%;
-    --accent: 30 100% 80%;
-    --accent-foreground: 210 50% 25%;
-    --destructive: 0 100% 90%;
-    --destructive-foreground: 210 100% 20%;
-    --border: 0 0% 80%;
-    --input: 0 0% 80%;
-    --ring: 200 60% 50%;
-  }
-
-  html.dark {
-    --background: 210 100% 20%;
-    --foreground: 0 0% 100%;
-    --card: 210 50% 40%;
-    --card-foreground: 0 0% 100%;
-    --primary: 210 100% 80%;
-    --primary-foreground: 210 100% 20%;
-    --secondary: 180 33% 70%;
-    --secondary-foreground: 210 100% 20%;
-    --muted: 210 50% 40%;
-    --muted-foreground: 60 100% 90%;
-    --accent: 30 100% 80%;
-    --accent-foreground: 210 100% 20%;
-    --destructive: 0 100% 90%;
-    --destructive-foreground: 210 100% 20%;
-    --border: 210 50% 40%;
-    --input: 210 50% 40%;
-    --ring: 210 100% 80%;
-  }
-}
 
 @layer base {
   body {

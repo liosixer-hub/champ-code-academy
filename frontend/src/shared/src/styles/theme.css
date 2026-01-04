@@ -1,0 +1,49 @@
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    --background: 0 0% 100%;
+    --foreground: 210 100% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 100% 16%;
+    --primary: 199 89% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 200 92% 60%;
+    --secondary-foreground: 210 100% 16%;
+    --muted: 201 94% 93%;
+    --muted-foreground: 210 20% 36%;
+    --accent: 201 94% 74%;
+    --accent-foreground: 210 100% 16%;
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 201 94% 86%;
+    --input: 201 94% 86%;
+    --ring: 199 89% 56%;
+  }
+
+  html.dark {
+    --background: 210 30% 12%;
+    --foreground: 0 0% 100%;
+    --card: 210 28% 18%;
+    --card-foreground: 0 0% 100%;
+    --primary: 199 89% 56%;
+    --primary-foreground: 210 100% 16%;
+    --secondary: 199 96% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 200 88% 27%;
+    --muted-foreground: 201 94% 93%;
+    --accent: 201 94% 74%;
+    --accent-foreground: 210 100% 16%;
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 200 88% 27%;
+    --input: 200 88% 27%;
+    --ring: 199 89% 56%;
+  }
+}

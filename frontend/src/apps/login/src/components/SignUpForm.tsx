@@ -114,7 +114,7 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
         {currentStep === 1 && (
           <div className="space-y-4">
             <div>
-              <label htmlFor="fullName" className="block text-sm mb-2 text-gray-700">
+              <label htmlFor="fullName" className="block text-sm mb-2 text-foreground">
                 Full Name
               </label>
               <input
@@ -122,13 +122,13 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
                 type="text"
                 value={formData.fullName}
                 onChange={(e) => updateFormData("fullName", e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-transparent outline-none transition"
                 placeholder="John Doe"
                 required
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm mb-2 text-gray-700">
+              <label htmlFor="email" className="block text-sm mb-2 text-foreground">
                 Email Address
               </label>
               <input
@@ -136,7 +136,7 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
                 type="email"
                 value={formData.email}
                 onChange={(e) => updateFormData("email", e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-transparent outline-none transition"
                 placeholder="john@example.com"
                 required
               />
@@ -147,7 +147,7 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
         {currentStep === 2 && (
           <div className="space-y-4">
             <div>
-              <label htmlFor="password" className="block text-sm mb-2 text-gray-700">
+              <label htmlFor="password" className="block text-sm mb-2 text-foreground">
                 Password
               </label>
               <input
@@ -155,16 +155,16 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
                 type="password"
                 value={formData.password}
                 onChange={(e) => updateFormData("password", e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-transparent outline-none transition"
                 placeholder="••••••••"
                 required
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 At least 8 characters with letters and numbers
               </p>
             </div>
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm mb-2 text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm mb-2 text-foreground">
                 Confirm Password
               </label>
               <input
@@ -172,7 +172,7 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
                 type="password"
                 value={formData.confirmPassword}
                 onChange={(e) => updateFormData("confirmPassword", e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:ring-1 focus:ring-ring focus:border-transparent outline-none transition"
                 placeholder="••••••••"
                 required
               />
@@ -210,7 +210,7 @@ export function SignUpForm({ onSwitchToLogin }: { onSwitchToLogin: () => void })
         />
       )}
 
-      <p className="text-center text-sm text-gray-600 mt-6">
+      <p className="text-center text-sm text-muted-foreground mt-6">
         Already have an account?{" "}
         <Button onClick={onSwitchToLogin} variant="link">
           Sign in

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, MessageTool } from "shared/components";
+import { Button, MessageBox } from "shared/components";
 import { useUserStore } from "shared/store";
 
 export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => void }) {
@@ -39,14 +39,14 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
   return (
     <div className="w-full max-w-md mx-auto px-8">
       <div className="mb-10">
-        <h1 className="text-3xl mb-2">Tutor Login</h1>
-        <p className="text-gray-600">Welcome back to Champ Code Academy</p>
+        <h1 className="text-3xl mb-2 text-foreground">Tutor Login</h1>
+        <p className="text-muted-foreground">Welcome back to Champ Code Academy</p>
       </div>
 
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm mb-2 text-gray-700">
+            <label htmlFor="email" className="block text-sm mb-2 text-foreground">
               Email Address
             </label>
             <input
@@ -54,13 +54,13 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+              className="w-full h-12 px-4 border border-border rounded-xl bg-input-background text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition"
               placeholder="john@example.com"
               required
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm mb-2 text-gray-700">
+            <label htmlFor="password" className="block text-sm mb-2 text-foreground">
               Password
             </label>
             <input
@@ -68,7 +68,7 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+              className="w-full h-12 px-4 border border-border rounded-xl bg-input-background text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition"
               placeholder="••••••••"
               required
             />
@@ -79,18 +79,18 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
           <label className="flex items-center">
             <input
               type="checkbox"
-              className="w-4 h-4 border-gray-300 rounded text-blue-600 focus:ring-blue-500"
+              className="w-4 h-4 border-input rounded text-primary focus:ring-ring"
             />
-            <span className="ml-2 text-sm text-gray-600">Remember me</span>
+            <span className="ml-2 text-sm text-muted-foreground">Remember me</span>
           </label>
-          <a href="#" className="text-sm text-blue-600 hover:underline">
+          <a href="#" className="text-sm text-primary hover:underline">
             Forgot password?
           </a>
         </div>
 
         <Button
           type="submit"
-          className="w-full mt-8"
+          className="w-full h-12 mt-8 rounded-xl font-medium"
           disabled={loading}
         >
           {loading ? 'Signing in...' : 'Sign In'}
@@ -98,14 +98,14 @@ export function LoginForm({ onSwitchToRegister }: { onSwitchToRegister: () => vo
       </form>
 
       {message && (
-        <MessageTool
+        <MessageBox
           message={message.text}
           type={message.type}
           onClose={() => setMessage(null)}
         />
       )}
 
-      <p className="text-center text-sm text-gray-600 mt-6">
+      <p className="text-center text-sm text-muted-foreground mt-6">
         Don't have an account?{" "}
         <Button onClick={onSwitchToRegister} variant="link">
           Register
