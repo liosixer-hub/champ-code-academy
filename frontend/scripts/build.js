@@ -181,7 +181,7 @@ function processBuild(target) {
     try {
       // 进入项目目录并运行 pnpm build
       process.chdir(projectPath);
-      const envOverride = { ...process.env };
+      const envOverride = { ...process.env, ...envProd };
       if (repoName) {
         let basePath;
         if (projectName === 'host') {
@@ -229,19 +229,16 @@ function processBuild(target) {
   });
 
   if (hasError) {
-    console.error('\n构建过程中发生错误，请检查日志。');
+    console.error('构建过程中发生错误，请检查日志。');
     process.exit(1);
   }
 
   console.log('\n所有项目构建完成！');
-  
-  // 创建 .nojekyll 文件以防止 GitHub Pages 忽略下划线开头的文件
-  const nojekyllPath = path.join(distDir, '.nojekyll');
-  fs.writeFileSync(nojekyllPath, '');
-  console.log('已创建 .nojekyll 文件');
-
   const hostIndex = path.join(distDir, 'index.html');
   if (fs.existsSync(hostIndex)) {
     fs.copyFileSync(hostIndex, path.join(distDir, '404.html'));
   }
+  
+  // Create .nojekyll file to prevent GitHub Pages from ignoring files starting with _
+  fs.writeFileSync(path.join(distDir, '.nojekyll'), '');
 }

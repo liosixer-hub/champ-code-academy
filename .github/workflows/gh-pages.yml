@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 20
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install -r
         working-directory: frontend
       - name: Build frontend
         run: pnpm build
