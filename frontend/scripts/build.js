@@ -180,17 +180,19 @@ function processBuild(target) {
       const envOverride = { ...process.env };
       if (repoName) {
         let basePath;
+        const isRootSite = repoName.endsWith('.github.io');
+        const siteBase = isRootSite ? `https://${repoOwner}.github.io` : `https://${repoOwner}.github.io/${repoName}`;
         if (projectName === 'host') {
-          basePath = `/${repoName}/`;
+          basePath = isRootSite ? '/' : `/${repoName}/`;
           if (repoOwner) {
-            envOverride.BASE_URL_SHARED = `https://${repoOwner}.github.io/${repoName}/shared`;
-            envOverride.BASE_URL_LOGIN = `https://${repoOwner}.github.io/${repoName}/login`;
-            envOverride.BASE_URL_DASHBOARD = `https://${repoOwner}.github.io/${repoName}/dashboard`;
+            envOverride.BASE_URL_SHARED = `${siteBase}/shared`;
+            envOverride.BASE_URL_LOGIN = `${siteBase}/login`;
+            envOverride.BASE_URL_DASHBOARD = `${siteBase}/dashboard`;
           }
         } else {
-          basePath = `/${repoName}/${projectName}/`;
+          basePath = isRootSite ? `/${projectName}/` : `/${repoName}/${projectName}/`;
           if (repoOwner && (projectName === 'login' || projectName === 'dashboard')) {
-            envOverride.BASE_URL_SHARED = `https://${repoOwner}.github.io/${repoName}/shared`;
+            envOverride.BASE_URL_SHARED = `${siteBase}/shared`;
           }
         }
         envOverride.BASE_PATH = basePath;
