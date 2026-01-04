@@ -13,8 +13,20 @@ const AppWithStore: React.FC = () => {
   );
 };
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <AppWithStore />
-  </React.StrictMode>,
-)
+async function enableMocking() {
+  const { worker } = await import('../../../server/browser');
+  return worker.start({
+    onUnhandledRequest: 'bypass',
+    serviceWorker: {
+      url: `${import.meta.env.BASE_URL}mockServiceWorker.js`
+    }
+  });
+}
+
+enableMocking().then(() => {
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+      <AppWithStore />
+    </React.StrictMode>,
+  )
+});

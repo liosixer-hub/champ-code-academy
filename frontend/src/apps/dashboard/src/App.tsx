@@ -51,7 +51,8 @@ export const DashboardApp: React.FC = () => {
   const fetchLessons = async (showLoading = true) => {
     try {
       if (showLoading) setLoading(true);
-      const response = await fetch('http://localhost:8000/api/lessons');
+      const baseUrl = import.meta.env.BASE_URL;
+      const response = await fetch(`${baseUrl}api/lessons`);
       if (!response.ok) {
         throw new Error('Failed to fetch lessons');
       }

@@ -9,6 +9,7 @@ const port = new URL(loginUrl).port;
 
 export default defineConfig({
   base: process.env.BASE_PATH || '/',
+  publicDir: path.resolve(__dirname, '../../public'),
   plugins: [
     react(),
     federation({

@@ -13,10 +13,16 @@
   "devDependencies": {
     "@types/node": "^25.0.3",
     "kill-port": "^2.0.1",
+    "msw": "^2.12.7",
     "serve": "^14.2.5"
   },
   "dependencies": {
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

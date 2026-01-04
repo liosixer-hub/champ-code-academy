@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import federation from '@originjs/vite-plugin-federation';
 import { log } from 'console';
+import path from 'path';
 
 const sharedUrl = process.env.BASE_URL_SHARED || 'http://localhost:5001';
 const loginUrl = process.env.BASE_URL_LOGIN || 'http://localhost:5002';
@@ -13,6 +14,7 @@ log('Using dashboard URL:', dashboardUrl);
 
 export default defineConfig({
   base: process.env.BASE_PATH || '/',
+  publicDir: path.resolve(__dirname, '../../public'),
   plugins: [
     react(),
     federation({
