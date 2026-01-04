@@ -17,18 +17,17 @@
   "devDependencies": {
     "@originjs/vite-plugin-federation": "^1.4.1",
     "@tailwindcss/postcss": "^4.1.18",
+    "@types/react-slick": "^0.23.13",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.23",
     "clsx": "^2.1.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
     "vite": "^6.4.1",
     "zustand": "^5.0.9"
-  },
-  "dependencies": {
-    "react-slick": "^0.31.0",
-    "slick-carousel": "^1.8.1"
   }
 }

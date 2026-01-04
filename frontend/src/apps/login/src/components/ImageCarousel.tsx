@@ -1,27 +1,33 @@
-import { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const carouselItems = [
   {
-    image: "https://images.unsplash.com/photo-1742440710136-1976b1cad864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB3b3Jrc3BhY2UlMjBjb2xsYWJvcmF0aW9ufGVufDF8fHx8MTc2NzIyOTgxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    tagline: "Empower the next generation",
-    subtitle: "Join our community of passionate coding tutors"
+    image:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop",
+    tagline: "Empower Your Learning Journey",
+    subtitle:
+      "Access world-class education from anywhere, at any time. Join a community of lifelong learners.",
   },
   {
-    image: "https://images.unsplash.com/photo-1765046894839-29753508f446?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwc3VjY2VzcyUyMGNlbGVicmF0aW9ufGVufDF8fHx8MTc2NzMyMTE1M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    tagline: "Shape young minds",
-    subtitle: "Inspire students to reach their full potential"
+    image:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop",
+    tagline: "Collaborate and Grow Together",
+    subtitle:
+      "Connect with peers and mentors. Share knowledge, solve problems, and achieve your goals faster.",
   },
   {
-    image: "https://images.unsplash.com/photo-1742440710136-1976b1cad864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMGRlc2lnbiUyMHN0dWRpb3xlbnwxfHx8fDE3NjcyMTM5MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    tagline: "Flexible teaching opportunities",
-    subtitle: "Work on your own schedule, make a difference"
-  }
+    image:
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop",
+    tagline: "Master New Skills Daily",
+    subtitle:
+      "Stay ahead in your career with our constantly updated courses. Learn the latest technologies and trends.",
+  },
 ];
 
-export function ImageCarousel() {
+export const ImageCarousel = () => {
   const sliderRef = useRef<Slider>(null);
 
   const settings = {
@@ -63,4 +69,4 @@ export function ImageCarousel() {
       </Slider>
     </div>
   );
-}
+};

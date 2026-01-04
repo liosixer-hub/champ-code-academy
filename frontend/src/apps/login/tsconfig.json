@@ -20,14 +20,14 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": false,
+    /* Type roots */
+    "typeRoots": ["../../types"],
     /* Path mapping */
     "paths": {
-      "@/*": ["./src/*"],
-      "shared/*": ["../../shared/src/*"],
-      "login/*": ["./src/*"]
+      "@/*": ["./src/*"]
     },
     "baseUrl": "."
   },
-  "include": ["src"],
+  "include": ["src", "../../types/**/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
